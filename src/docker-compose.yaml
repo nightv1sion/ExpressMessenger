@@ -1,0 +1,24 @@
+services:
+  express-messenger.users-management:
+    container_name: ExpressMessenger.UsersManagement
+    build:
+      context: .
+      dockerfile: UsersManagement/ExpressMessenger.UsersManagement.Api/Dockerfile
+    ports:
+      - "5500:8080"
+    environment:
+      ConnectionStrings__Database: Host=express-messenger.postgres;Port=5432;Database=express-messenger.users-management;Username=postgres;Password=postgres;
+    labels:
+      com.jetbrains.rider.debug: "true"
+      
+  express-messenger.postgres:
+    image: postgres:17
+    container_name: ExpressMessenger.Postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"

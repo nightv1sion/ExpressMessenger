@@ -1,0 +1,96 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.BlazorWebApp", "WebApp\ExpressMessenger.BlazorWebApp\ExpressMessenger.BlazorWebApp.csproj", "{1CE71C1A-9471-4230-9CAF-0054BF3FC8CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{75AF2D97-29DC-4FEC-B973-A63090B01C17}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UsersManagement", "UsersManagement", "{AA8E9C93-A7EE-4605-A1BE-57D6B4214E70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.UsersManagement.Api", "UsersManagement\ExpressMessenger.UsersManagement.Api\ExpressMessenger.UsersManagement.Api.csproj", "{98B52ECA-E88B-4297-A4E9-4F703D7E5573}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.UsersManagement.Domain", "UsersManagement\ExpressMessenger.UsersManagement.Domain\ExpressMessenger.UsersManagement.Domain.csproj", "{058D6F3A-A728-4329-A3DA-A15B7E389D31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{CEDAEDEF-A709-404A-92EC-5CE1D12A8E37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Common.Domain", "Common\ExpressMessenger.Common.Domain\ExpressMessenger.Common.Domain.csproj", "{0661A451-DE6C-4C47-8EBE-E2E0A6B0BFD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.UsersManagement.Application", "UsersManagement\ExpressMessenger.UsersManagement.Application\ExpressMessenger.UsersManagement.Application.csproj", "{C63FF132-0D8A-4543-BE7C-914EF4D66486}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Common.Application", "Common\ExpressMessenger.Common.Application\ExpressMessenger.Common.Application.csproj", "{3E5038DF-C6A1-416F-9624-F66B47DDFD1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.UsersManagement.Infrastructure", "UsersManagement\ExpressMessenger.UsersManagement.Infrastructure\ExpressMessenger.UsersManagement.Infrastructure.csproj", "{43B0E4DC-D69E-43A0-AFB9-7DF3D28C56D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Common.Api", "Common\ExpressMessenger.Common.Api\ExpressMessenger.Common.Api.csproj", "{A75078AF-0DB4-4877-A824-6B5EF50237C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Common.Infrastructure", "Common\ExpressMessenger.Common.Infrastructure\ExpressMessenger.Common.Infrastructure.csproj", "{FE960363-17F0-4777-9F9A-6D476F28C22E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "docker-compose", "docker-compose.dcproj", "{9EA59FD0-34D9-4824-1111-46CC85B30A0E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppHost", "AppHost", "{0B692BFE-6D4B-4EE0-AFF1-B1D175F3C26B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.AppHost", "AppHost\ExpressMessenger.AppHost\ExpressMessenger.AppHost.csproj", "{D8C1DB39-6E65-43D5-8696-FD6C07FDF565}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1CE71C1A-9471-4230-9CAF-0054BF3FC8CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE71C1A-9471-4230-9CAF-0054BF3FC8CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CE71C1A-9471-4230-9CAF-0054BF3FC8CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE71C1A-9471-4230-9CAF-0054BF3FC8CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98B52ECA-E88B-4297-A4E9-4F703D7E5573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98B52ECA-E88B-4297-A4E9-4F703D7E5573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98B52ECA-E88B-4297-A4E9-4F703D7E5573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98B52ECA-E88B-4297-A4E9-4F703D7E5573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{058D6F3A-A728-4329-A3DA-A15B7E389D31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{058D6F3A-A728-4329-A3DA-A15B7E389D31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{058D6F3A-A728-4329-A3DA-A15B7E389D31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{058D6F3A-A728-4329-A3DA-A15B7E389D31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0661A451-DE6C-4C47-8EBE-E2E0A6B0BFD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0661A451-DE6C-4C47-8EBE-E2E0A6B0BFD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0661A451-DE6C-4C47-8EBE-E2E0A6B0BFD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0661A451-DE6C-4C47-8EBE-E2E0A6B0BFD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C63FF132-0D8A-4543-BE7C-914EF4D66486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C63FF132-0D8A-4543-BE7C-914EF4D66486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C63FF132-0D8A-4543-BE7C-914EF4D66486}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C63FF132-0D8A-4543-BE7C-914EF4D66486}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E5038DF-C6A1-416F-9624-F66B47DDFD1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E5038DF-C6A1-416F-9624-F66B47DDFD1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E5038DF-C6A1-416F-9624-F66B47DDFD1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E5038DF-C6A1-416F-9624-F66B47DDFD1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43B0E4DC-D69E-43A0-AFB9-7DF3D28C56D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43B0E4DC-D69E-43A0-AFB9-7DF3D28C56D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43B0E4DC-D69E-43A0-AFB9-7DF3D28C56D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43B0E4DC-D69E-43A0-AFB9-7DF3D28C56D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75078AF-0DB4-4877-A824-6B5EF50237C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75078AF-0DB4-4877-A824-6B5EF50237C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75078AF-0DB4-4877-A824-6B5EF50237C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75078AF-0DB4-4877-A824-6B5EF50237C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE960363-17F0-4777-9F9A-6D476F28C22E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE960363-17F0-4777-9F9A-6D476F28C22E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE960363-17F0-4777-9F9A-6D476F28C22E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE960363-17F0-4777-9F9A-6D476F28C22E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EA59FD0-34D9-4824-1111-46CC85B30A0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EA59FD0-34D9-4824-1111-46CC85B30A0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EA59FD0-34D9-4824-1111-46CC85B30A0E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EA59FD0-34D9-4824-1111-46CC85B30A0E}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{D8C1DB39-6E65-43D5-8696-FD6C07FDF565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8C1DB39-6E65-43D5-8696-FD6C07FDF565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8C1DB39-6E65-43D5-8696-FD6C07FDF565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8C1DB39-6E65-43D5-8696-FD6C07FDF565}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1CE71C1A-9471-4230-9CAF-0054BF3FC8CD} = {75AF2D97-29DC-4FEC-B973-A63090B01C17}
+		{98B52ECA-E88B-4297-A4E9-4F703D7E5573} = {AA8E9C93-A7EE-4605-A1BE-57D6B4214E70}
+		{058D6F3A-A728-4329-A3DA-A15B7E389D31} = {AA8E9C93-A7EE-4605-A1BE-57D6B4214E70}
+		{0661A451-DE6C-4C47-8EBE-E2E0A6B0BFD2} = {CEDAEDEF-A709-404A-92EC-5CE1D12A8E37}
+		{C63FF132-0D8A-4543-BE7C-914EF4D66486} = {AA8E9C93-A7EE-4605-A1BE-57D6B4214E70}
+		{3E5038DF-C6A1-416F-9624-F66B47DDFD1B} = {CEDAEDEF-A709-404A-92EC-5CE1D12A8E37}
+		{43B0E4DC-D69E-43A0-AFB9-7DF3D28C56D4} = {AA8E9C93-A7EE-4605-A1BE-57D6B4214E70}
+		{A75078AF-0DB4-4877-A824-6B5EF50237C3} = {CEDAEDEF-A709-404A-92EC-5CE1D12A8E37}
+		{FE960363-17F0-4777-9F9A-6D476F28C22E} = {CEDAEDEF-A709-404A-92EC-5CE1D12A8E37}
+		{D8C1DB39-6E65-43D5-8696-FD6C07FDF565} = {0B692BFE-6D4B-4EE0-AFF1-B1D175F3C26B}
+	EndGlobalSection
+EndGlobal

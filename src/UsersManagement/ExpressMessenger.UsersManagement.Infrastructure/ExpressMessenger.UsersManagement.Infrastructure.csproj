@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0" />
+<!--        <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />-->
+<!--        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />-->
+<!--        <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />-->
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Common\ExpressMessenger.Common.Infrastructure\ExpressMessenger.Common.Infrastructure.csproj" />
+      <ProjectReference Include="..\ExpressMessenger.UsersManagement.Application\ExpressMessenger.UsersManagement.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+        <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+    
+
+</Project>

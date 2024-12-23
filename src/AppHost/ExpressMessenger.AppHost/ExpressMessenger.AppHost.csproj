@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0"/>
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsAspireHost>true</IsAspireHost>
+        <UserSecretsId>fd8f2269-bdf2-413e-8279-a2c703b7d319</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0"/>
+        <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\UsersManagement\ExpressMessenger.UsersManagement.Api\ExpressMessenger.UsersManagement.Api.csproj" />
+      <ProjectReference Include="..\..\WebApp\ExpressMessenger.BlazorWebApp\ExpressMessenger.BlazorWebApp.csproj" />
+    </ItemGroup>
+
+</Project>
