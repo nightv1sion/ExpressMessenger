@@ -1,4 +1,5 @@
 using ExpressMessenger.Common.Api;
+using ExpressMessenger.UsersManagement.Api.OpenApi;
 using ExpressMessenger.UsersManagement.Application;
 using ExpressMessenger.UsersManagement.Infrastructure;
 using ExpressMessenger.UsersManagement.Infrastructure.Persistence;
@@ -7,7 +8,12 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+});
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services
     .RegisterApplication()
@@ -21,7 +27,8 @@ builder.Services.AddCors(options =>
     {
         builder
             .AllowAnyOrigin()
-            .AllowAnyMethod();
+            .AllowAnyMethod()
+            .AllowAnyHeader();
     });
 });
 
@@ -45,7 +52,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapEndpoints();
 
 app.Run();

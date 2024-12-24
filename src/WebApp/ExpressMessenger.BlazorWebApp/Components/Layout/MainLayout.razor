@@ -1,8 +1,17 @@
-﻿@inherits LayoutComponentBase
+﻿@using ExpressMessenger.BlazorWebApp.Apis.UsersManagement
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inherits LayoutComponentBase
+@inject IUsersManagementApi UsersManagementApi
+@inject ProtectedLocalStorage LocalStorage;
 
-<BlazorBootstrapLayout StickyHeader="true">
+<BlazorBootstrapLayout HeaderSectionCssClass="d-flex justify-content-between">
     <HeaderSection>
-        <ThemeSwitcher Class="ps-3 ps-lg-2" Position="DropdownMenuPosition.End" />
+            <div>
+                @(userId.HasValue ? $"Ваш идентификатор: {userId.Value}" : "UserId: Something went wrong")
+            </div>
+            <div>
+                <ThemeSwitcher Class="ps-3 ps-lg-2" Position="DropdownMenuPosition.End"/>
+            </div>
     </HeaderSection>
 
     <SidebarSection>
@@ -22,6 +31,7 @@
 
 @code {
     private IEnumerable<NavItem> navItems = default!;
+    private Guid? userId = null;
 
     private async Task<Sidebar2DataProviderResult> Sidebar2DataProvider(Sidebar2DataProviderRequest request)
     {
@@ -45,6 +55,39 @@
 
         return navItems;
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+        
+        ProtectedBrowserStorageResult<UserLocalStorageInfo> localStorageUserInfo = await LocalStorage
+            .GetAsync<UserLocalStorageInfo>("user-info");
+    
+        if (localStorageUserInfo.Success)
+        {
+            userId = localStorageUserInfo.Value!.UserId;
+        }
+        else
+        {
+            var response = await UsersManagementApi.RegisterUser();
+            userId = response.UserId;
+        
+            await LocalStorage.SetAsync("user-info", new UserLocalStorageInfo(
+                userId.Value,
+                response.AccessToken,
+                response.RefreshToken));
+        }
+    
+        StateHasChanged();
+    }
+
+    sealed record UserLocalStorageInfo(
+        Guid UserId,
+        string AccessToken,
+        string RefreshToken);
 }
 
 <div id="blazor-error-ui" data-nosnippet>

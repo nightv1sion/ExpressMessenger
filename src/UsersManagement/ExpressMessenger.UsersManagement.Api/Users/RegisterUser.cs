@@ -1,4 +1,5 @@
 using ExpressMessenger.Common.Api;
+using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.RegisterUser;
 using ExpressMessenger.UsersManagement.Application.Authentication.RegisterUser;
 using MediatR;
 namespace ExpressMessenger.UsersManagement.Api.Users;
@@ -11,7 +12,8 @@ internal sealed class RegisterUser : IEndpoint
             {
                 RegisterUserCommand command = new();
                 RegisteredUserModel result = await sender.Send(command);
-                return Results.Ok(result);
+                RegisterUserResponse response = new(result.UserId, result.AccessToken, result.RefreshToken);
+                return Results.Ok(response);
             })
             .AllowAnonymous()
             .WithTags(Tags.Users);

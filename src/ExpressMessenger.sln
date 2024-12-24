@@ -30,6 +30,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppHost", "AppHost", "{0B69
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.AppHost", "AppHost\ExpressMessenger.AppHost\ExpressMessenger.AppHost.csproj", "{D8C1DB39-6E65-43D5-8696-FD6C07FDF565}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernel", "SharedKernel", "{AEDBBFD7-EE16-44E1-ADDB-C1590EE3A895}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.SharedKernel.ApiContracts", "SharedKernel\ExpressMessenger.SharedKernel.ApiContracts\ExpressMessenger.SharedKernel.ApiContracts.csproj", "{03904083-B7D8-4A83-8604-A19CFE3F798B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +84,10 @@ Global
 		{D8C1DB39-6E65-43D5-8696-FD6C07FDF565}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8C1DB39-6E65-43D5-8696-FD6C07FDF565}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8C1DB39-6E65-43D5-8696-FD6C07FDF565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03904083-B7D8-4A83-8604-A19CFE3F798B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03904083-B7D8-4A83-8604-A19CFE3F798B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03904083-B7D8-4A83-8604-A19CFE3F798B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03904083-B7D8-4A83-8604-A19CFE3F798B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1CE71C1A-9471-4230-9CAF-0054BF3FC8CD} = {75AF2D97-29DC-4FEC-B973-A63090B01C17}
@@ -92,5 +100,6 @@ Global
 		{A75078AF-0DB4-4877-A824-6B5EF50237C3} = {CEDAEDEF-A709-404A-92EC-5CE1D12A8E37}
 		{FE960363-17F0-4777-9F9A-6D476F28C22E} = {CEDAEDEF-A709-404A-92EC-5CE1D12A8E37}
 		{D8C1DB39-6E65-43D5-8696-FD6C07FDF565} = {0B692BFE-6D4B-4EE0-AFF1-B1D175F3C26B}
+		{03904083-B7D8-4A83-8604-A19CFE3F798B} = {AEDBBFD7-EE16-44E1-ADDB-C1590EE3A895}
 	EndGlobalSection
 EndGlobal

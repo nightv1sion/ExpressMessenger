@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Common\ExpressMessenger.Common.Api\ExpressMessenger.Common.Api.csproj" />
+      <ProjectReference Include="..\..\SharedKernel\ExpressMessenger.SharedKernel.ApiContracts\ExpressMessenger.SharedKernel.ApiContracts.csproj" />
       <ProjectReference Include="..\ExpressMessenger.UsersManagement.Application\ExpressMessenger.UsersManagement.Application.csproj" />
       <ProjectReference Include="..\ExpressMessenger.UsersManagement.Infrastructure\ExpressMessenger.UsersManagement.Infrastructure.csproj" />
     </ItemGroup>

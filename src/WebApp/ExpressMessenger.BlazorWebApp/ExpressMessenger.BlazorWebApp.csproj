@@ -8,6 +8,8 @@
 
     <ItemGroup>
         <PackageReference Include="Blazor.Bootstrap" Version="3.2.0" />
+        <PackageReference Include="Refit" Version="8.0.0" />
+        <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -19,6 +21,10 @@
       <_ContentIncludedByDefault Remove="Components\Pages\Weather.razor" />
       <_ContentIncludedByDefault Remove="Components\Routes.razor" />
       <_ContentIncludedByDefault Remove="Components\_Imports.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\SharedKernel\ExpressMessenger.SharedKernel.ApiContracts\ExpressMessenger.SharedKernel.ApiContracts.csproj" />
     </ItemGroup>
 
 </Project>
