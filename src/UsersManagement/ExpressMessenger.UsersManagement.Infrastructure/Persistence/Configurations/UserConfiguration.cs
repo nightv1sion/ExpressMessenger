@@ -23,6 +23,12 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired(false);
         
         builder
+            .Property(x => x.RefreshToken)
+            .ValueGeneratedNever()
+            .HasMaxLength(256)
+            .IsRequired(false);
+        
+        builder
             .Property(x => x.Created)
             .ValueGeneratedNever()
             .IsRequired(true);

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Common\ExpressMessenger.Common.Application\ExpressMessenger.Common.Application.csproj" />
+        <ProjectReference Include="..\ExpressMessenger.Chatting.Domain\ExpressMessenger.Chatting.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

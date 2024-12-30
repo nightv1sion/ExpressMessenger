@@ -1,4 +1,5 @@
 using ExpressMessenger.BlazorWebApp.Apis;
+using ExpressMessenger.BlazorWebApp.Authentication;
 using ExpressMessenger.BlazorWebApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,9 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddBlazorBootstrap();
 
-builder.Services.RegisterApis(builder.Configuration);
+builder.Services
+    .RegisterApis(builder.Configuration)
+    .RegisterAuthentication();
 
 var app = builder.Build();
 

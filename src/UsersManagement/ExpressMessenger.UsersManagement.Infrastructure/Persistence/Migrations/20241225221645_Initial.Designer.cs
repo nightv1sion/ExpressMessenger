@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ExpressMessenger.UsersManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241221124834_Initial")]
+    [Migration("20241225221645_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -34,6 +34,11 @@ namespace ExpressMessenger.UsersManagement.Infrastructure.Persistence.Migrations
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created");
+
+                    b.Property<string>("RefreshToken")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("refresh_token");
 
                     b.Property<DateTimeOffset?>("RefreshTokenExpired")
                         .HasColumnType("timestamp with time zone")

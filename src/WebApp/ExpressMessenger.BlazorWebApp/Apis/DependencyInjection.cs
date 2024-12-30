@@ -12,9 +12,15 @@ public static class DependencyInjection
         services.AddSingleton(apisSettings);
 
         services
-            .AddRefitClient<IUsersManagementApi>()
+            .AddRefitClient<IAuthenticationApi>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(apisSettings.UsersManagement.Url));
+        
+        services
+            .AddRefitClient<IUsersApi>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(apisSettings.UsersManagement.Url));
 
+        services.AddTransient<BearerTokenDelegatingHandler>();
+        
         return services;
     }
 }

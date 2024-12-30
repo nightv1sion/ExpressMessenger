@@ -1,4 +1,5 @@
 using System.Text;
+using ExpressMessenger.Common.Infrastructure.Authentication;
 using ExpressMessenger.UsersManagement.Application.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -15,25 +16,7 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        JwtSettings jwtSettings = new();
-        configuration.Bind(JwtSettings.Section, jwtSettings);
-        
-        services.AddSingleton(Options.Create(jwtSettings));
-        
-        services
-            .AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtSettings.Issuer,
-                ValidAudience = jwtSettings.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(jwtSettings.Secret)),
-            });
-        services.AddAuthorization();
+        services.RegisterJwtAuthentication(configuration, nameof(JwtSettings));
         
         return services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
     }

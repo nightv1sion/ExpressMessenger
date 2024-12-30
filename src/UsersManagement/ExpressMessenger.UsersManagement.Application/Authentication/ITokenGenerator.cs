@@ -4,5 +4,11 @@ namespace ExpressMessenger.UsersManagement.Application.Authentication;
 
 public interface ITokenGenerator
 {
-    TokenDto GenerateToken(User user, CancellationToken cancellationToken);
+    TokenDto GenerateToken(User user);
+
+    TokenDto RefreshToken(
+        User user,
+        string accessToken,
+        string refreshToken);
+
 }

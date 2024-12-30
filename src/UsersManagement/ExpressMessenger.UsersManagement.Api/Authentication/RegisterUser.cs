@@ -2,13 +2,14 @@ using ExpressMessenger.Common.Api;
 using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.RegisterUser;
 using ExpressMessenger.UsersManagement.Application.Authentication.RegisterUser;
 using MediatR;
-namespace ExpressMessenger.UsersManagement.Api.Users;
+
+namespace ExpressMessenger.UsersManagement.Api.Authentication;
 
 internal sealed class RegisterUser : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("users/register", async (ISender sender) =>
+        app.MapPost("authentication/register", async (ISender sender) =>
             {
                 RegisterUserCommand command = new();
                 RegisteredUserModel result = await sender.Send(command);

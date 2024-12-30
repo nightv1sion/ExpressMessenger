@@ -1,9 +1,7 @@
-namespace ExpressMessenger.UsersManagement.Infrastructure.Authentication;
+namespace ExpressMessenger.Common.Infrastructure.Authentication;
 
 public sealed class JwtSettings
 {
-    public const string Section = nameof(JwtSettings);
-
     public string Audience { get; init; } = null!;
     
     public string Issuer { get; init; } = null!;

@@ -16,6 +16,7 @@ namespace ExpressMessenger.UsersManagement.Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
+                    refresh_token = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     refresh_token_expired = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     created = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },

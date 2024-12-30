@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\UsersManagement\ExpressMessenger.UsersManagement.Api\ExpressMessenger.UsersManagement.Api.csproj" />
+      <ProjectReference Include="..\..\Chatting\ExpressMessenger.Chatting.Api\ExpressMessenger.Chatting.Api.csproj" />
       <ProjectReference Include="..\..\WebApp\ExpressMessenger.BlazorWebApp\ExpressMessenger.BlazorWebApp.csproj" />
     </ItemGroup>
 

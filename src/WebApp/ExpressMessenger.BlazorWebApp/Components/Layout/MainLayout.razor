@@ -1,8 +1,11 @@
 ﻿@using ExpressMessenger.BlazorWebApp.Apis.UsersManagement
-@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using ExpressMessenger.BlazorWebApp.Authentication
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.GetUser
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.RegisterUser
 @inherits LayoutComponentBase
-@inject IUsersManagementApi UsersManagementApi
-@inject ProtectedLocalStorage LocalStorage;
+@inject IAuthenticationApi AuthenticationApi
+@inject ITokenManager TokenManager;
+@inject IUsersApi UsersApi;
 
 <BlazorBootstrapLayout HeaderSectionCssClass="d-flex justify-content-between">
     <HeaderSection>
@@ -63,31 +66,25 @@
             return;
         }
         
-        ProtectedBrowserStorageResult<UserLocalStorageInfo> localStorageUserInfo = await LocalStorage
-            .GetAsync<UserLocalStorageInfo>("user-info");
+        (bool success, string? accessToken) = await TokenManager.GetAccessToken();
     
-        if (localStorageUserInfo.Success)
+        if (success && accessToken is not null)
         {
-            userId = localStorageUserInfo.Value!.UserId;
+            GetUserResponse response = await UsersApi.GetUser($"Bearer {accessToken}");
+            userId = response.UserId;
         }
         else
         {
-            var response = await UsersManagementApi.RegisterUser();
+            RegisterUserResponse response = await AuthenticationApi.RegisterUser();
             userId = response.UserId;
-        
-            await LocalStorage.SetAsync("user-info", new UserLocalStorageInfo(
-                userId.Value,
+            await TokenManager.SetToken(
+                response.UserId,
                 response.AccessToken,
-                response.RefreshToken));
+                response.RefreshToken);
         }
-    
+        
         StateHasChanged();
     }
-
-    sealed record UserLocalStorageInfo(
-        Guid UserId,
-        string AccessToken,
-        string RefreshToken);
 }
 
 <div id="blazor-error-ui" data-nosnippet>

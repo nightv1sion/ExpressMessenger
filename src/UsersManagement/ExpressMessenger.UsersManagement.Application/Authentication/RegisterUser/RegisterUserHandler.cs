@@ -13,7 +13,7 @@ internal sealed class RegisterUserHandler(
         CancellationToken cancellationToken)
     {
         User user = User.Create();
-        TokenDto token = tokenGenerator.GenerateToken(user, cancellationToken);
+        TokenDto token = tokenGenerator.GenerateToken(user);
 
         await userRepository.InsertAsync(user, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

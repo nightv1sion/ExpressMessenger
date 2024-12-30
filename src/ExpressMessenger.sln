@@ -34,6 +34,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernel", "SharedKerne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.SharedKernel.ApiContracts", "SharedKernel\ExpressMessenger.SharedKernel.ApiContracts\ExpressMessenger.SharedKernel.ApiContracts.csproj", "{03904083-B7D8-4A83-8604-A19CFE3F798B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chatting", "Chatting", "{6F0F7FF0-519A-42B2-9E4B-7DBDAC188529}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Chatting.Domain", "Chatting\ExpressMessenger.Chatting.Domain\ExpressMessenger.Chatting.Domain.csproj", "{7010CDD6-FBAA-43F5-BFD1-F67552E87219}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Chatting.Application", "Chatting\ExpressMessenger.Chatting.Application\ExpressMessenger.Chatting.Application.csproj", "{8A60D4AA-4CD8-4030-99B2-0E125767636B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Chatting.Infrastructure", "Chatting\ExpressMessenger.Chatting.Infrastructure\ExpressMessenger.Chatting.Infrastructure.csproj", "{65FD23D4-F917-4BF8-AE08-F50A778EE349}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Chatting.Api", "Chatting\ExpressMessenger.Chatting.Api\ExpressMessenger.Chatting.Api.csproj", "{91FE71E4-F899-45EA-A7ED-5828155F1E06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +98,22 @@ Global
 		{03904083-B7D8-4A83-8604-A19CFE3F798B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03904083-B7D8-4A83-8604-A19CFE3F798B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03904083-B7D8-4A83-8604-A19CFE3F798B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7010CDD6-FBAA-43F5-BFD1-F67552E87219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7010CDD6-FBAA-43F5-BFD1-F67552E87219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7010CDD6-FBAA-43F5-BFD1-F67552E87219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7010CDD6-FBAA-43F5-BFD1-F67552E87219}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A60D4AA-4CD8-4030-99B2-0E125767636B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A60D4AA-4CD8-4030-99B2-0E125767636B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A60D4AA-4CD8-4030-99B2-0E125767636B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A60D4AA-4CD8-4030-99B2-0E125767636B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65FD23D4-F917-4BF8-AE08-F50A778EE349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65FD23D4-F917-4BF8-AE08-F50A778EE349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65FD23D4-F917-4BF8-AE08-F50A778EE349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65FD23D4-F917-4BF8-AE08-F50A778EE349}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91FE71E4-F899-45EA-A7ED-5828155F1E06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91FE71E4-F899-45EA-A7ED-5828155F1E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91FE71E4-F899-45EA-A7ED-5828155F1E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91FE71E4-F899-45EA-A7ED-5828155F1E06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1CE71C1A-9471-4230-9CAF-0054BF3FC8CD} = {75AF2D97-29DC-4FEC-B973-A63090B01C17}
@@ -101,5 +127,9 @@ Global
 		{FE960363-17F0-4777-9F9A-6D476F28C22E} = {CEDAEDEF-A709-404A-92EC-5CE1D12A8E37}
 		{D8C1DB39-6E65-43D5-8696-FD6C07FDF565} = {0B692BFE-6D4B-4EE0-AFF1-B1D175F3C26B}
 		{03904083-B7D8-4A83-8604-A19CFE3F798B} = {AEDBBFD7-EE16-44E1-ADDB-C1590EE3A895}
+		{7010CDD6-FBAA-43F5-BFD1-F67552E87219} = {6F0F7FF0-519A-42B2-9E4B-7DBDAC188529}
+		{8A60D4AA-4CD8-4030-99B2-0E125767636B} = {6F0F7FF0-519A-42B2-9E4B-7DBDAC188529}
+		{65FD23D4-F917-4BF8-AE08-F50A778EE349} = {6F0F7FF0-519A-42B2-9E4B-7DBDAC188529}
+		{91FE71E4-F899-45EA-A7ED-5828155F1E06} = {6F0F7FF0-519A-42B2-9E4B-7DBDAC188529}
 	EndGlobalSection
 EndGlobal
