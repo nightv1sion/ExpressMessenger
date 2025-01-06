@@ -5,6 +5,8 @@ public sealed class ApisSettings
     public const string SectionName = "Apis";
 
     public Api UsersManagement { get; init; } = null!;
+    
+    public Api Chatting { get; init; } = null!;
 
     public sealed class Api
     {

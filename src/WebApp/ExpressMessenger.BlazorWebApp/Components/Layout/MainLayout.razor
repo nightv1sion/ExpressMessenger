@@ -1,16 +1,20 @@
-﻿@using ExpressMessenger.BlazorWebApp.Apis.UsersManagement
+﻿@using ExpressMessenger.BlazorWebApp.Apis.Chatting
+@using ExpressMessenger.BlazorWebApp.Apis.UsersManagement
 @using ExpressMessenger.BlazorWebApp.Authentication
+@using ExpressMessenger.SharedKernel.ApiContracts.Chatting.GetChats
 @using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.GetUser
 @using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.RegisterUser
 @inherits LayoutComponentBase
 @inject IAuthenticationApi AuthenticationApi
 @inject ITokenManager TokenManager;
 @inject IUsersApi UsersApi;
+@inject IChattingApi ChattingApi;
+
 
 <BlazorBootstrapLayout HeaderSectionCssClass="d-flex justify-content-between">
     <HeaderSection>
             <div>
-                @(userId.HasValue ? $"Ваш идентификатор: {userId.Value}" : "UserId: Something went wrong")
+                @(_userId.HasValue ? $"Ваш идентификатор: {_userId.Value}" : "UserId: Something went wrong")
             </div>
             <div>
                 <ThemeSwitcher Class="ps-3 ps-lg-2" Position="DropdownMenuPosition.End"/>
@@ -33,30 +37,41 @@
 </BlazorBootstrapLayout>
 
 @code {
-    private IEnumerable<NavItem> navItems = default!;
-    private Guid? userId = null;
+    private IReadOnlyCollection<GetChatsResponse.ChatModel>? _chats;
+    private Guid? _userId;
 
-    private async Task<Sidebar2DataProviderResult> Sidebar2DataProvider(Sidebar2DataProviderRequest request)
+    private async Task<Sidebar2DataProviderResult?> Sidebar2DataProvider(Sidebar2DataProviderRequest request)
     {
-        if (navItems is null)
+        if (_chats is null)
         {
-            navItems = GetNavItems();
+            (bool success, string? accessToken) = await TokenManager.GetAccessToken();
+
+            if (!success || accessToken is null)
+            {
+                return null;
+            }
+            
+            var chats = await LoadChats(TokenManager.ToBearer(accessToken));
+            _chats = chats.Chats;
         }
 
-        return await Task.FromResult(request.ApplyTo(navItems));
+        return new Sidebar2DataProviderResult
+        {
+            Data = _chats
+                .Select(x => new NavItem
+                {
+                    Id = x.ChatId.ToString(),
+                    Href = $"/chats/{x.ChatId}",
+                    IconName = IconName.Messenger,
+                    Text = string.Join(", ", x.Companions.Select(companion => companion.UserId))
+                })
+                .ToArray()
+        };
     }
 
-    private IEnumerable<NavItem> GetNavItems()
+    private async Task<GetChatsResponse> LoadChats(string bearerToken)
     {
-        navItems = new List<NavItem>
-        {
-            new() { Id = "1", Href = "/", IconName = IconName.HouseDoorFill, Text = "Home", Match = NavLinkMatch.All },
-            new() { Id = "2", Href = "/counter", IconName = IconName.PlusSquareFill, Text = "Counter" },
-            new() { Id = "3", Href = "/weather", IconName = IconName.Table, Text = "Weather" },
-            new() { Id = "4", Href = "/messenger", IconName = IconName.Messenger, Text = "Messenger" },
-        };
-
-        return navItems;
+        return await ChattingApi.GetChats(bearerToken);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -70,13 +85,13 @@
     
         if (success && accessToken is not null)
         {
-            GetUserResponse response = await UsersApi.GetUser($"Bearer {accessToken}");
-            userId = response.UserId;
+            GetUserResponse response = await UsersApi.GetUser(TokenManager.ToBearer(accessToken));
+            _userId = response.UserId;
         }
         else
         {
             RegisterUserResponse response = await AuthenticationApi.RegisterUser();
-            userId = response.UserId;
+            _userId = response.UserId;
             await TokenManager.SetToken(
                 response.UserId,
                 response.AccessToken,
@@ -86,9 +101,3 @@
         StateHasChanged();
     }
 }
-
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>

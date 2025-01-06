@@ -66,7 +66,12 @@ public sealed class TokenManager(
             
         return (true, apiResponse.Content!.AccessToken);
     }
-    
+
+    public string ToBearer(string token)
+    {
+        return $"Bearer {token}";
+    }
+
     sealed record UserLocalStorageInfo(
         Guid UserId,
         string AccessToken,

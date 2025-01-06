@@ -1,8 +1,10 @@
 using ExpressMessenger.Chatting.Application;
+using ExpressMessenger.Chatting.Application.Chats;
 using ExpressMessenger.Chatting.Infrastructure;
 using ExpressMessenger.Chatting.Infrastructure.Persistence;
 using ExpressMessenger.Common.Api;
 using ExpressMessenger.Common.Api.OpenApi;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -36,7 +38,24 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddProblemDetails();
+builder.Services.AddProblemDetails(options =>
+{
+    options.CustomizeProblemDetails = context =>
+    {
+        if (context.Exception is ChatNotFoundException)
+        {
+            context.ProblemDetails = new ProblemDetails
+            {
+                Status = 404,
+                Title = context.Exception.Message,
+                Detail = context.Exception.Message,
+            };
+
+            context.HttpContext.Response.StatusCode = 404;
+            context.HttpContext.Response.WriteAsJsonAsync(context.ProblemDetails);
+        }
+    };
+});
 
 var app = builder.Build();
 

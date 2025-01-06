@@ -1,3 +1,4 @@
+using ExpressMessenger.BlazorWebApp.Apis.Chatting;
 using ExpressMessenger.BlazorWebApp.Apis.UsersManagement;
 using Refit;
 
@@ -18,6 +19,10 @@ public static class DependencyInjection
         services
             .AddRefitClient<IUsersApi>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(apisSettings.UsersManagement.Url));
+        
+        services
+            .AddRefitClient<IChattingApi>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(apisSettings.Chatting.Url));
 
         services.AddTransient<BearerTokenDelegatingHandler>();
         

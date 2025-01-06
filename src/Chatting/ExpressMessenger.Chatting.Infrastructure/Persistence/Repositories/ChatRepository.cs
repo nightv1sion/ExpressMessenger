@@ -6,6 +6,15 @@ namespace ExpressMessenger.Chatting.Infrastructure.Persistence.Repositories;
 internal sealed class ChatRepository(
     ApplicationDbContext dbContext) : IChatRepository
 {
+    public async Task<IReadOnlyCollection<Chat>> GetUserChats(
+        Guid userId,
+        CancellationToken cancellationToken)
+    {
+        return await dbContext.Set<Chat>()
+            .Where(x => x.Members.Any(member => member.UserId == userId))
+            .ToArrayAsync(cancellationToken);
+    }
+
     public async Task InsertAsync(Chat chat, CancellationToken cancellationToken)
     {
         await dbContext.Set<Chat>().AddAsync(chat, cancellationToken);
