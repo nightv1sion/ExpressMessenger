@@ -28,7 +28,8 @@ internal sealed class GetChat : IEndpoint
                         chat.ChatId,
                         chat.Companions
                             .Select(companion => new GetChatResponse.ChatModel.CompanionModel(
-                                companion.UserId))
+                                companion.UserId,
+                                companion.DisplayNumber))
                             .ToArray(),
                         chat.Type.ToString())));
             })

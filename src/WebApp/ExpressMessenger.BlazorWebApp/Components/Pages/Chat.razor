@@ -9,8 +9,10 @@
 
 @code {
     private GetChatResponse.ChatModel? _chat;
-    
-    public string ChatName => string.Join(", ", _chat?.Companions.Select(companion => companion.UserId) ?? Array.Empty<Guid>());
+
+    private string ChatName => string.Join(
+        ", ",
+        _chat?.Companions.Select(companion => companion.DisplayNumber) ?? Array.Empty<uint>());
     
     [Parameter]
     public Guid ChatId { get; init; }

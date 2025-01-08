@@ -1,6 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
-using ExpressMessenger.BlazorWebApp.Apis.UsersManagement;
-using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.RefreshToken;
+using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication;
+using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication.RefreshToken;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Refit;
 

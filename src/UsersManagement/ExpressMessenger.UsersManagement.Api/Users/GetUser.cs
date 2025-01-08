@@ -1,5 +1,5 @@
 using ExpressMessenger.Common.Api;
-using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.GetUser;
+using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users.GetUser;
 using ExpressMessenger.UsersManagement.Application.Users;
 using ExpressMessenger.UsersManagement.Application.Users.GetUser;
 using MediatR;
@@ -19,7 +19,9 @@ internal sealed class GetUser : IEndpoint
                 
                 GetUserQuery query = new(requestUserId);
                 UserDto result = await sender.Send(query);
-                GetUserResponse response = new(result.UserId);
+                GetUserResponse response = new(
+                    result.UserId,
+                    result.DisplayNumber);
                 return Results.Ok(response);
             })
             .RequireAuthorization()

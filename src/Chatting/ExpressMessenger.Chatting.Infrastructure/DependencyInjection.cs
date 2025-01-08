@@ -1,3 +1,4 @@
+using ExpressMessenger.Chatting.Infrastructure.Apis;
 using ExpressMessenger.Chatting.Infrastructure.Persistence;
 using ExpressMessenger.Common.Infrastructure.Authentication;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ public static class DependencyInjection
     {
         return services
             .RegisterJwtAuthentication(configuration, nameof(JwtSettings))
+            .RegisterApis(configuration)
             .RegisterPersistence(configuration);
     }
 }

@@ -1,0 +1,3 @@
+namespace ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users.GetUsersDisplayNumbers;
+
+public sealed record GetUsersDisplayNumbersResponse(IReadOnlyDictionary<Guid, uint> DisplayNumbers);

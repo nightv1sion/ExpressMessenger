@@ -12,7 +12,9 @@ internal sealed class RegisterUserHandler(
         RegisterUserCommand request,
         CancellationToken cancellationToken)
     {
-        User user = User.Create();
+        uint biggestDisplayNumber = await userRepository.GetBiggestDisplayNumber(cancellationToken);
+        
+        User user = User.Create(biggestDisplayNumber + 1);
         TokenDto token = tokenGenerator.GenerateToken(user);
 
         await userRepository.InsertAsync(user, cancellationToken);

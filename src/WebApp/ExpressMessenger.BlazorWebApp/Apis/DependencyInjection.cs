@@ -1,5 +1,6 @@
 using ExpressMessenger.BlazorWebApp.Apis.Chatting;
-using ExpressMessenger.BlazorWebApp.Apis.UsersManagement;
+using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication;
+using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users;
 using Refit;
 
 namespace ExpressMessenger.BlazorWebApp.Apis;

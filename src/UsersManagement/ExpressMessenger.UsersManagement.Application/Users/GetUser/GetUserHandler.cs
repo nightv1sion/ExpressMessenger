@@ -10,6 +10,6 @@ internal sealed class GetUserHandler(
     public async Task<UserDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
         User? user = await userRepository.TryGetById(request.UserId, cancellationToken);
-        return new UserDto(user!.Id);
+        return new UserDto(user!.Id, user.DisplayNumber);
     }
 }

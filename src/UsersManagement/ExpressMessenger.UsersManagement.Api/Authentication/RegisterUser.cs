@@ -1,5 +1,5 @@
 using ExpressMessenger.Common.Api;
-using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.RegisterUser;
+using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication.RegisterUser;
 using ExpressMessenger.UsersManagement.Application.Authentication.RegisterUser;
 using MediatR;
 

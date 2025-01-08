@@ -8,7 +8,13 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Common\ExpressMessenger.Common.Infrastructure\ExpressMessenger.Common.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\SharedKernel\ExpressMessenger.SharedKernel.ApiContracts\ExpressMessenger.SharedKernel.ApiContracts.csproj" />
         <ProjectReference Include="..\ExpressMessenger.Chatting.Application\ExpressMessenger.Chatting.Application.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
+    </ItemGroup>
+    
 
 </Project>

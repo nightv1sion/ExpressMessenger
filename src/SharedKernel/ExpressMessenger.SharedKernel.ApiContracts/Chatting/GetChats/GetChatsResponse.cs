@@ -8,6 +8,8 @@ public sealed record GetChatsResponse(
         IReadOnlyCollection<ChatModel.CompanionModel> Companions,
         string Type)
     {
-        public sealed record CompanionModel(Guid UserId);
+        public sealed record CompanionModel(
+            Guid UserId,
+            uint DisplayNumber);
     };
 }

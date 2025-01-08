@@ -1,4 +1,4 @@
-namespace ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.RegisterUser;
+namespace ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication.RegisterUser;
 
 public sealed record RegisterUserResponse(
     Guid UserId,

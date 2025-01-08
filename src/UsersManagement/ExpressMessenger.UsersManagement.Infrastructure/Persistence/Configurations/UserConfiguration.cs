@@ -16,6 +16,11 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .Property(x => x.Id)
             .IsRequired()
             .ValueGeneratedNever();
+
+        builder
+            .Property(x => x.DisplayNumber)
+            .IsRequired()
+            .ValueGeneratedNever();
         
         builder
             .Property(x => x.RefreshTokenExpired)

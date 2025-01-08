@@ -1,5 +1,5 @@
 using ExpressMessenger.Common.Api;
-using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.RefreshToken;
+using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication.RefreshToken;
 using ExpressMessenger.UsersManagement.Application.Authentication.RefreshToken;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

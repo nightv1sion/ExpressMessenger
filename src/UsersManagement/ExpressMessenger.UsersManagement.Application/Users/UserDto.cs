@@ -1,3 +1,5 @@
 namespace ExpressMessenger.UsersManagement.Application.Users;
 
-public sealed record UserDto(Guid UserId);
+public sealed record UserDto(
+    Guid UserId, 
+    uint DisplayNumber);

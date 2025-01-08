@@ -1,9 +1,10 @@
 ﻿@using ExpressMessenger.BlazorWebApp.Apis.Chatting
-@using ExpressMessenger.BlazorWebApp.Apis.UsersManagement
 @using ExpressMessenger.BlazorWebApp.Authentication
 @using ExpressMessenger.SharedKernel.ApiContracts.Chatting.GetChats
-@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.GetUser
-@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.RegisterUser
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication.RegisterUser
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users.GetUser
 @inherits LayoutComponentBase
 @inject IAuthenticationApi AuthenticationApi
 @inject ITokenManager TokenManager;
@@ -14,7 +15,7 @@
 <BlazorBootstrapLayout HeaderSectionCssClass="d-flex justify-content-between">
     <HeaderSection>
             <div>
-                @(_userId.HasValue ? $"Ваш идентификатор: {_userId.Value}" : "UserId: Something went wrong")
+                @(_userDisplayNumber.HasValue ? $"Ваш идентификатор: {_userDisplayNumber.Value}" : "")
             </div>
             <div>
                 <ThemeSwitcher Class="ps-3 ps-lg-2" Position="DropdownMenuPosition.End"/>
@@ -38,7 +39,7 @@
 
 @code {
     private IReadOnlyCollection<GetChatsResponse.ChatModel>? _chats;
-    private Guid? _userId;
+    private uint? _userDisplayNumber;
 
     private async Task<Sidebar2DataProviderResult?> Sidebar2DataProvider(Sidebar2DataProviderRequest request)
     {
@@ -63,7 +64,7 @@
                     Id = x.ChatId.ToString(),
                     Href = $"/chats/{x.ChatId}",
                     IconName = IconName.Messenger,
-                    Text = string.Join(", ", x.Companions.Select(companion => companion.UserId))
+                    Text = string.Join(", ", x.Companions.Select(companion => companion.DisplayNumber))
                 })
                 .ToArray()
         };
@@ -82,21 +83,19 @@
         }
         
         (bool success, string? accessToken) = await TokenManager.GetAccessToken();
-    
-        if (success && accessToken is not null)
+
+        if (!success || accessToken is null)
         {
-            GetUserResponse response = await UsersApi.GetUser(TokenManager.ToBearer(accessToken));
-            _userId = response.UserId;
-        }
-        else
-        {
-            RegisterUserResponse response = await AuthenticationApi.RegisterUser();
-            _userId = response.UserId;
+            RegisterUserResponse registerResponse = await AuthenticationApi.RegisterUser();
+            accessToken = registerResponse.AccessToken;
             await TokenManager.SetToken(
-                response.UserId,
-                response.AccessToken,
-                response.RefreshToken);
+                registerResponse.UserId,
+                registerResponse.AccessToken,
+                registerResponse.RefreshToken);
         }
+
+        GetUserResponse response = await UsersApi.GetUser(TokenManager.ToBearer(accessToken));
+        _userDisplayNumber = response.DisplayNumber;
         
         StateHasChanged();
     }

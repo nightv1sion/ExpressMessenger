@@ -7,6 +7,11 @@ internal sealed class UserRepository(
     ApplicationDbContext context)
     : IUserRepository
 {
+    public async Task<uint> GetBiggestDisplayNumber(CancellationToken cancellationToken)
+    {
+        return await context.Set<User>().MaxAsync(x => x.DisplayNumber, cancellationToken);
+    }
+
     public async Task InsertAsync(User user, CancellationToken cancellationToken)
     {
         await context.Set<User>()
@@ -17,5 +22,14 @@ internal sealed class UserRepository(
     {
         return await context.Set<User>()
             .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
+
+    public async Task<IReadOnlyDictionary<Guid, uint>> GetDisplayNumbers(
+        IReadOnlyCollection<Guid> userIds,
+        CancellationToken cancellationToken)
+    {
+        return await context.Set<User>()
+            .Where(x => userIds.Contains(x.Id))
+            .ToDictionaryAsync(x => x.Id, x => x.DisplayNumber, cancellationToken);
     }
 }

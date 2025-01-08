@@ -7,5 +7,7 @@ public sealed record ChatModel(
     IReadOnlyCollection<ChatModel.CompanionModel> Companions,
     ChatType Type)
 {
-    public sealed record CompanionModel(Guid UserId);
+    public sealed record CompanionModel(
+        Guid UserId,
+        uint DisplayNumber);
 };

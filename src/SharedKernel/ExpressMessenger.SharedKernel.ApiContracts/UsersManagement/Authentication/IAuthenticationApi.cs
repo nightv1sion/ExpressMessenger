@@ -1,8 +1,8 @@
-using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.RefreshToken;
-using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.RegisterUser;
+using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication.RefreshToken;
+using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication.RegisterUser;
 using Refit;
 
-namespace ExpressMessenger.BlazorWebApp.Apis.UsersManagement;
+namespace ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication;
 
 public interface IAuthenticationApi
 {
