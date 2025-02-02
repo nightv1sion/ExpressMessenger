@@ -36,7 +36,7 @@ jobs:
           file: ./src/UsersManagement/ExpressMessenger.UsersManagement.Api/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REGISTRY_USERNAME }}/express-messenger/users-management-api:latest
+            ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REGISTRY_USERNAME }}/express-messenger-users-management-api:latest
           platforms: linux/amd64
           provenance: false
 
@@ -60,7 +60,7 @@ jobs:
           proxy_password: ${{ secrets.PROXY_SSH_PASSWORD }}
           proxy_port: ${{ secrets.PROXY_SSH_PORT }}
           source: "infra/users-management-api/"
-          target: /home/${{ secrets.SSH_USERNAME }}/github/express-messenger/users-management-api/k8s
+          target: /home/${{ secrets.SSH_USERNAME }}/github/express-messenger-users-management-api/k8s
           strip_components: 2
 
       - name: "Apply Kubernetes files"
@@ -75,7 +75,7 @@ jobs:
           proxy_password: ${{ secrets.PROXY_SSH_PASSWORD }}
           proxy_port: ${{ secrets.PROXY_SSH_PORT }}
           script: |
-            cd /home/${{ secrets.SSH_USERNAME }}/github/express-messenger/users-management-api/k8s
+            cd /home/${{ secrets.SSH_USERNAME }}/github/express-messenger-users-management-api/k8s
             ls -1 *.yaml | sort
 
             for FILE in $(ls -1 *.yaml | sort); do
@@ -84,4 +84,4 @@ jobs:
                 fi
             done
 
-            echo ${{ secrets.SSH_PASSWORD }} | sudo -S rm -rf /home/${{ secrets.SSH_USERNAME }}/github/express-messenger/users-management-api/k8s
+            echo ${{ secrets.SSH_PASSWORD }} | sudo -S rm -rf /home/${{ secrets.SSH_USERNAME }}/github/express-messenger-users-management-api/k8s
