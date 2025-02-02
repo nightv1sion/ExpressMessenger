@@ -45,6 +45,8 @@ jobs:
           script: |
             echo ${{ secrets.SSH_PASSWORD }} | sudo cd /home/${{ secrets.SSH_USERNAME }}/github/express-messenger/aspire-dashboard/k8s
 
+            ls -1 *.yaml | sort
+
             for FILE in $(ls -1 *.yaml | sort); do
                 if [ -f "$FILE" ]; then
                     echo ${{ secrets.SSH_PASSWORD }} | sudo -S microk8s kubectl apply -f "$FILE"
