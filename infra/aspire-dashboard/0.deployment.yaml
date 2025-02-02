@@ -38,7 +38,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: aspire-dashboard-clusterip
+  name: aspire-dashboard
   namespace: express-messenger
 spec:
   selector:
