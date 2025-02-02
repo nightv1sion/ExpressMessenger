@@ -27,9 +27,9 @@ jobs:
           proxy_username: ${{ secrets.PROXY_SSH_USERNAME }}
           proxy_password: ${{ secrets.PROXY_SSH_PASSWORD }}
           proxy_port: ${{ secrets.PROXY_SSH_PORT }}
-          source: "infra/*.namespace.yaml/"
+          source: "infra/aspire-dashboard/"
           target: /home/${{ secrets.SSH_USERNAME }}/github/express-messenger/aspire-dashboard/k8s
-          strip_components: 1
+          strip_components: 2
 
       - name: "Apply Kubernetes files"
         uses: appleboy/ssh-action@v1.0.0

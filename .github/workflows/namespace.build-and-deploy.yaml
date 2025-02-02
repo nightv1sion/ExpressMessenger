@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 jobs:
   deploy:
-    name: "Deploy Blazor Web App"
+    name: "Deploy K8S Namespace"
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -27,7 +27,7 @@ jobs:
           proxy_username: ${{ secrets.PROXY_SSH_USERNAME }}
           proxy_password: ${{ secrets.PROXY_SSH_PASSWORD }}
           proxy_port: ${{ secrets.PROXY_SSH_PORT }}
-          source: "infra/*.namespace.yaml/"
+          source: "infra/*.namespace.yaml"
           target: /home/${{ secrets.SSH_USERNAME }}/github/express-messenger/k8s
           strip_components: 1
 
