@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: users-management-api
-          image: docker.io/nightv1sion/express-messenger/users-management-api:latest
+          image: docker.io/nightv1sion/express-messenger-users-management-api:latest
           imagePullPolicy: Always
           ports:
             - name: http

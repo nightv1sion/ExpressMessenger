@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: blazor-web-app
-          image: docker.io/nightv1sion/express-messenger/blazor-web-app:latest
+          image: docker.io/nightv1sion/express-messenger-blazor-web-app:latest
           imagePullPolicy: Always
           ports:
             - name: http

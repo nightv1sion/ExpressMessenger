@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: chatting-api
-          image: docker.io/nightv1sion/express-messenger/chatting-api:latest
+          image: docker.io/nightv1sion/express-messenger-chatting-api:latest
           imagePullPolicy: Always
           ports:
             - name: http
