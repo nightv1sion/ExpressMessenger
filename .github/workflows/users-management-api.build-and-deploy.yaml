@@ -75,7 +75,8 @@ jobs:
           proxy_password: ${{ secrets.PROXY_SSH_PASSWORD }}
           proxy_port: ${{ secrets.PROXY_SSH_PORT }}
           script: |
-            echo ${{ secrets.SSH_PASSWORD }} | sudo cd /home/${{ secrets.SSH_USERNAME }}/github/express-messenger/users-management-api/k8s
+            cd /home/${{ secrets.SSH_USERNAME }}/github/express-messenger/users-management-api/k8s
+            ls -1 *.yaml | sort
 
             for FILE in $(ls -1 *.yaml | sort); do
                 if [ -f "$FILE" ]; then

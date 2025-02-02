@@ -5,6 +5,7 @@ metadata:
   name: blazor-web-app
   labels:
     app: blazor-web-app
+  namespace: express-messenger
 spec:
   minReadySeconds: 60
   replicas: 1

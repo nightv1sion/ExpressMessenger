@@ -5,6 +5,7 @@ metadata:
   name: users-management-api
   labels:
     app: users-management-api
+  namespace: express-messenger
 spec:
   minReadySeconds: 60
   replicas: 1

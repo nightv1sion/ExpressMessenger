@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: aspire-dashboard
+  namespace: express-messenger
   labels:
     app: aspire-dashboard
 spec:

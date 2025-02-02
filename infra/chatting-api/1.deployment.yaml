@@ -5,6 +5,7 @@ metadata:
   name: chatting-api
   labels:
     app: chatting-api
+  namespace: express-messenger
 spec:
   minReadySeconds: 60
   replicas: 1
