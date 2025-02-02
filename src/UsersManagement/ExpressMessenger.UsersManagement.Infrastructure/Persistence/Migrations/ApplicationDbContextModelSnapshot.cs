@@ -32,10 +32,6 @@ namespace ExpressMessenger.UsersManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created");
 
-                    b.Property<long>("DisplayNumber")
-                        .HasColumnType("bigint")
-                        .HasColumnName("display_number");
-
                     b.Property<string>("RefreshToken")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
@@ -44,6 +40,12 @@ namespace ExpressMessenger.UsersManagement.Infrastructure.Persistence.Migrations
                     b.Property<DateTimeOffset?>("RefreshTokenExpired")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("refresh_token_expired");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("user_name");
 
                     b.HasKey("Id")
                         .HasName("pk_users");

@@ -1,0 +1,3 @@
+namespace ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users.ValidateFreeUserName;
+
+public sealed record ValidateFreeUserNameRequest(string UserName);

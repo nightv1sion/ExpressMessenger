@@ -1,21 +1,18 @@
-﻿@using ExpressMessenger.BlazorWebApp.Apis.Chatting
-@using ExpressMessenger.BlazorWebApp.Authentication
+﻿@using ExpressMessenger.BlazorWebApp.Authentication
+@using ExpressMessenger.SharedKernel.ApiContracts.Chatting
 @using ExpressMessenger.SharedKernel.ApiContracts.Chatting.GetChats
-@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication
-@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication.RegisterUser
 @using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users
 @using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users.GetUser
+@using ExpressMessenger.BlazorWebApp.Components.Pages
 @inherits LayoutComponentBase
-@inject IAuthenticationApi AuthenticationApi
 @inject ITokenManager TokenManager;
 @inject IUsersApi UsersApi;
-@inject IChattingApi ChattingApi;
-
+@inject IChatApi ChatApi;
 
 <BlazorBootstrapLayout HeaderSectionCssClass="d-flex justify-content-between">
     <HeaderSection>
             <div>
-                @(_userDisplayNumber.HasValue ? $"Ваш идентификатор: {_userDisplayNumber.Value}" : "")
+                @(string.IsNullOrEmpty(_userName) ? "" : $"Ваше имя пользователя: {_userName}")
             </div>
             <div>
                 <ThemeSwitcher Class="ps-3 ps-lg-2" Position="DropdownMenuPosition.End"/>
@@ -30,7 +27,7 @@
                   DataProvider="Sidebar2DataProvider"
                   WidthUnit="Unit.Px" />
     </SidebarSection>
-
+    
     <ContentSection>
         @Body
     </ContentSection>
@@ -39,7 +36,7 @@
 
 @code {
     private IReadOnlyCollection<GetChatsResponse.ChatModel>? _chats;
-    private uint? _userDisplayNumber;
+    private string? _userName;
 
     private async Task<Sidebar2DataProviderResult?> Sidebar2DataProvider(Sidebar2DataProviderRequest request)
     {
@@ -64,7 +61,7 @@
                     Id = x.ChatId.ToString(),
                     Href = $"/chats/{x.ChatId}",
                     IconName = IconName.Messenger,
-                    Text = string.Join(", ", x.Companions.Select(companion => companion.DisplayNumber))
+                    Text = string.Join(", ", x.Companions.Select(companion => companion.UserName))
                 })
                 .ToArray()
         };
@@ -72,7 +69,7 @@
 
     private async Task<GetChatsResponse> LoadChats(string bearerToken)
     {
-        return await ChattingApi.GetChats(bearerToken);
+        return await ChatApi.GetChats(bearerToken);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -86,16 +83,11 @@
 
         if (!success || accessToken is null)
         {
-            RegisterUserResponse registerResponse = await AuthenticationApi.RegisterUser();
-            accessToken = registerResponse.AccessToken;
-            await TokenManager.SetToken(
-                registerResponse.UserId,
-                registerResponse.AccessToken,
-                registerResponse.RefreshToken);
+            return;
         }
 
         GetUserResponse response = await UsersApi.GetUser(TokenManager.ToBearer(accessToken));
-        _userDisplayNumber = response.DisplayNumber;
+        _userName = response.UserName;
         
         StateHasChanged();
     }

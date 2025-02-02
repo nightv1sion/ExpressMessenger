@@ -23,6 +23,7 @@ internal sealed class ChatRepository(
     public async Task<Chat?> TryGetById(Guid id, CancellationToken cancellationToken)
     {
         return await dbContext.Set<Chat>()
+            .Include(x => x.Messages.OrderBy(message => message.Sent))
             .Where(x => x.Id == id)
             .SingleOrDefaultAsync(cancellationToken);
     }

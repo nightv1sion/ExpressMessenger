@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExpressMessenger.UsersManagement.Api.Users;
 
-internal sealed class GetUsersDisplayNumbers : IEndpoint
+internal sealed class GetUserNames : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("users/display-numbers", async (
+        app.MapGet("users/usernames", async (
                 [FromQuery] Guid[] userIds,
                 ISender sender,
                 IHttpContextAccessor httpContextAccessor) =>
@@ -20,9 +20,9 @@ internal sealed class GetUsersDisplayNumbers : IEndpoint
                         .First(claim => claim.Type == "userId")
                         .Value);
                 
-                GetUsersDisplayNumbersQuery query = new(userIds);
-                IReadOnlyDictionary<Guid, uint> result = await sender.Send(query);
-                GetUsersDisplayNumbersResponse response = new(result);
+                GetUserNamesQuery query = new(userIds);
+                IReadOnlyDictionary<Guid, string> result = await sender.Send(query);
+                GetUserNamesResponse response = new(result);
                 return Results.Ok(response);
             })
             .RequireAuthorization()

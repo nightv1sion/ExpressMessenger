@@ -10,5 +10,7 @@ public interface ITokenManager
     
     Task<(bool, string?)> GetAccessToken(CancellationToken cancellationToken = default);
 
+    Task<string> GetBearerAccessToken(CancellationToken cancellationToken = default);
+    
     string ToBearer(string token);
 }

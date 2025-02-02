@@ -5,7 +5,7 @@ namespace ExpressMessenger.UsersManagement.Domain.UserAggregate;
 
 public sealed class User : AggregateRoot
 {
-    public uint DisplayNumber { get; private init; }
+    public string UserName { get; private init; }
     
     public string? RefreshToken { get; private set; }
     
@@ -14,12 +14,12 @@ public sealed class User : AggregateRoot
     public DateTimeOffset Created { get; private init; }
     
     public static User Create(
-        uint displayNumber)
+        string userName)
     {
         return new User
         {
             Id = Guid.NewGuid(),
-            DisplayNumber = displayNumber,
+            UserName = userName,
             Created = DateTimeOffset.UtcNow,
         };
     }

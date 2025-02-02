@@ -10,6 +10,6 @@ public sealed record GetChatsResponse(
     {
         public sealed record CompanionModel(
             Guid UserId,
-            uint DisplayNumber);
+            string UserName);
     };
 }

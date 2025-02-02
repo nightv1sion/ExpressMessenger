@@ -21,7 +21,7 @@ internal sealed class GetUser : IEndpoint
                 UserDto result = await sender.Send(query);
                 GetUserResponse response = new(
                     result.UserId,
-                    result.DisplayNumber);
+                    result.UserName);
                 return Results.Ok(response);
             })
             .RequireAuthorization()

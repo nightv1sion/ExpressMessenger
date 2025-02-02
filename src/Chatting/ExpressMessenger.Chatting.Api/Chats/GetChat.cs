@@ -26,12 +26,21 @@ internal sealed class GetChat : IEndpoint
                 return Results.Ok(
                     new GetChatResponse(new GetChatResponse.ChatModel(
                         chat.ChatId,
+                        chat.Type.ToString(),
                         chat.Companions
                             .Select(companion => new GetChatResponse.ChatModel.CompanionModel(
                                 companion.UserId,
-                                companion.DisplayNumber))
+                                companion.UserNames))
                             .ToArray(),
-                        chat.Type.ToString())));
+                        chat.Messages
+                            .Select(message => new GetChatResponse.ChatModel.MessageModel(
+                                message.Id,
+                                message.SenderUserName,
+                                message.Text,
+                                message.IsMine,
+                                message.Sent
+                            ))
+                            .ToArray())));
             })
             .RequireAuthorization()
             .WithTags(Tags.Chats);

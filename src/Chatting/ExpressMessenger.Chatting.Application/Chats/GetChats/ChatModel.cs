@@ -9,5 +9,5 @@ public sealed record ChatModel(
 {
     public sealed record CompanionModel(
         Guid UserId,
-        uint DisplayNumber);
+        string UserName);
 };

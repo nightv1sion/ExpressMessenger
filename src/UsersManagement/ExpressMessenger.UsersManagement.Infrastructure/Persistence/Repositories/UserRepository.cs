@@ -7,9 +7,9 @@ internal sealed class UserRepository(
     ApplicationDbContext context)
     : IUserRepository
 {
-    public async Task<uint> GetBiggestDisplayNumber(CancellationToken cancellationToken)
+    public async Task<User?> TryGetBy(string userName, CancellationToken cancellationToken)
     {
-        return await context.Set<User>().MaxAsync(x => x.DisplayNumber, cancellationToken);
+        return await context.Set<User>().FirstOrDefaultAsync(x => x.UserName == userName, cancellationToken);
     }
 
     public async Task InsertAsync(User user, CancellationToken cancellationToken)
@@ -24,12 +24,26 @@ internal sealed class UserRepository(
             .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
-    public async Task<IReadOnlyDictionary<Guid, uint>> GetDisplayNumbers(
+    public async Task<IReadOnlyDictionary<Guid, string>> GetUserNames(
         IReadOnlyCollection<Guid> userIds,
         CancellationToken cancellationToken)
     {
         return await context.Set<User>()
             .Where(x => userIds.Contains(x.Id))
-            .ToDictionaryAsync(x => x.Id, x => x.DisplayNumber, cancellationToken);
+            .ToDictionaryAsync(x => x.Id, x => x.UserName, cancellationToken);
+    }
+
+    public async Task<IReadOnlyCollection<User>> SearchBy(
+        IReadOnlyCollection<string>? userNames = null,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<User> query = context.Set<User>();
+
+        if (userNames is not null)
+        {
+            query = query.Where(x => userNames.Contains(x.UserName));
+        }
+        
+        return await query.ToArrayAsync(cancellationToken);
     }
 }

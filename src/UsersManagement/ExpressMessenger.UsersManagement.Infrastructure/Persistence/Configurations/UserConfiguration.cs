@@ -18,8 +18,9 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .ValueGeneratedNever();
 
         builder
-            .Property(x => x.DisplayNumber)
+            .Property(x => x.UserName)
             .IsRequired()
+            .HasMaxLength(64)
             .ValueGeneratedNever();
         
         builder

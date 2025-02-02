@@ -7,3 +7,4 @@
 **/.vs
 **/.containers
 **/appsettings.Development.json
+**/aspirate-state.json

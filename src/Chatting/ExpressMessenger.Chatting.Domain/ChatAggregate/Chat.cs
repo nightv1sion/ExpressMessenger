@@ -27,6 +27,11 @@ public sealed class Chat : AggregateRoot
     {
         _members.Add(Member.Create(userId, Id));
     }
+    
+    public void AddMembers(IReadOnlyCollection<Guid> userIds)
+    {
+        _members.AddRange(userIds.Select(userId => Member.Create(userId, Id)));
+    }
 
     public static Chat Personal(
         Guid initiatorId,
@@ -43,6 +48,22 @@ public sealed class Chat : AggregateRoot
 
         return chat;
     }
+    public static Chat Group(
+        Guid initiatorId,
+        IReadOnlyCollection<Guid> companionIds)
+    {
+        Chat chat = new()
+        {
+            Id = Guid.NewGuid(),
+            Type = ChatType.Personal,
+        };
+
+        chat.AddMember(initiatorId);
+        chat.AddMembers(companionIds);
+
+        return chat;
+    }
+    
 
     private Chat() { }
 }

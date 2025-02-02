@@ -7,12 +7,12 @@ namespace ExpressMessenger.Chatting.Infrastructure.Apis;
 internal sealed class UserInfoProvider(
     IUsersApi usersApi) : IUserInfoProvider
 {
-    public async Task<IReadOnlyDictionary<Guid, uint>> GetDisplayNumbers(IReadOnlyCollection<Guid> userIds, CancellationToken cancellationToken)
+    public async Task<IReadOnlyDictionary<Guid, string>> GetUserNames(IReadOnlyCollection<Guid> userIds, CancellationToken cancellationToken)
     {
-        GetUsersDisplayNumbersResponse response = await usersApi.GetUsersDisplayNumbers(
+        GetUserNamesResponse response = await usersApi.GetUserNames(
             userIds,
             cancellationToken);
         
-        return response.DisplayNumbers;
+        return response.UserNames;
     }
 }

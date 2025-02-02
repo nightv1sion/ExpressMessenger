@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-management-api
+  labels:
+    app: users-management-api
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-management-api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: users-management-api
+    spec:
+      containers:
+        - name: users-management-api
+          image: docker.io/nightv1sion/express-messenger/users-management-api:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: https
+              containerPort: 8443
+          envFrom:
+            - configMapRef:
+                name: users-management-api-configmap
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+      terminationGracePeriodSeconds: 180

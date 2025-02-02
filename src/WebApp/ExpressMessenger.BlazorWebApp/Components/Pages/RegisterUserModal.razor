@@ -1,0 +1,71 @@
+@using ExpressMessenger.BlazorWebApp.Authentication
+@using ExpressMessenger.SharedKernel.ApiContracts.Chatting
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication.RegisterUser
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users.ValidateFreeUserName
+
+<Toasts class="p-3" Messages="_messages" Placement="ToastsPlacement.TopRight" />
+
+<Modal @ref="_modal"
+       title="Введите ваше имя пользователя"
+       IsVerticallyCentered="true"
+       IsScrollable="true">
+    <BodyTemplate>
+        <p>Придумайте имя пользователя</p>
+        <InputText @bind-Value="_userName" id="UserName"/>
+        <Button Color="ButtonColor.Primary" Outline="true" @onclick="OnRegisterUser">
+            Создать пользователя
+        </Button>
+    </BodyTemplate>
+</Modal>
+
+<Button Color="ButtonColor.Primary" Outline="true" @onclick="OnShowModalClick">Создать пользователя</Button>
+
+
+@code {
+    private List<ToastMessage> _messages = new();
+    private Modal _modal = default!;
+    private string _userName = string.Empty;
+    
+    [Inject] IUsersApi UsersApi { get; init; } = default!;
+    [Inject] ITokenManager TokenManager { get; init; } = default!;
+    [Inject] IChatApi ChatApi { get; init; } = default!;
+    [Inject] IAuthenticationApi AuthenticationApi { get; init; } = default!;
+    [Inject] ToastService ToastService { get; init; } = default!;
+    [Inject] NavigationManager NavigationManager { get; init; } = default!;
+
+    private async Task OnShowModalClick()
+    {
+        await _modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await _modal.HideAsync();
+    }
+
+    private async Task OnRegisterUser()
+    {
+        var validateResponse = await UsersApi.ValidateFreeUserName(new ValidateFreeUserNameRequest(_userName));
+
+        if (!validateResponse.IsFree)
+        {
+            _messages.Add(new ToastMessage(
+                ToastType.Danger,
+                "Пользователь с таким именем уже существует"));
+            return;
+        }
+
+        RegisterUserResponse registerResponse = await AuthenticationApi.RegisterUser(
+            new RegisterUserRequest(_userName));
+        await TokenManager.SetToken(
+            registerResponse.UserId,
+            registerResponse.AccessToken,
+            registerResponse.RefreshToken);
+        
+        await _modal.HideAsync();
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+}
+

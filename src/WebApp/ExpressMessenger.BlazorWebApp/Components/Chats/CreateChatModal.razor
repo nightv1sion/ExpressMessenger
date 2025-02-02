@@ -1,0 +1,135 @@
+@using ExpressMessenger.BlazorWebApp.Authentication
+@using ExpressMessenger.SharedKernel.ApiContracts.Chatting
+@using ExpressMessenger.SharedKernel.ApiContracts.Chatting.CreateChat
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users
+@using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users.SearchUsers
+
+<Modal @ref="_modal" title="Создание чата" IsVerticallyCentered="true" IsScrollable="true">
+    <BodyTemplate>
+        <p>Добавляйте пользователей для создания чата</p>
+        <div class="row">
+            <div>
+                <AutoComplete @bind-Value="_userDisplayNumberFilter"
+                              TItem="SearchUsersResponse.SearchUserModel"
+                              DataProvider="UsersDataProvider"
+                              PropertyName="@UserNameFilter"
+                              Placeholder="Найдите пользователей по имени"
+                              OnChanged="OnAutoCompleteChanged"/>
+            </div>
+        </div>
+
+        @if (SelectedUsers.Count > 0)
+        {
+            <Card Class="w-100 mt-3">
+                <ul class="list-group list-group-flush">
+                    @for (int i = 0; i < SelectedUsers.Count; i++)
+                    {
+                        <li class="list-group-item w-100">
+                            <div class="w-100 d-flex justify-content-between">
+                                <div>
+                                    @SelectedUsers[i].UserName
+                                </div>
+                                <div>
+
+                                    @{
+                                        var userIndex = i;
+                                    }
+                                    <Button Color="ButtonColor.Danger"
+                                            Outline="true"
+                                            @onclick="() => OnDeleteSelectedUser(userIndex)"
+                                            Style="font-size: 8px">
+                                        <Icon Name="IconName.DashLg"/>
+                                    </Button>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </Card>
+        }
+
+    </BodyTemplate>
+    <FooterTemplate>
+        <Button Color="ButtonColor.Primary" Outline="true" @onclick="OnCreateChat">Создать чат</Button>
+        <Button Color="ButtonColor.Secondary" Outline="true" @onclick="OnHideModalClick">Отмена</Button>
+    </FooterTemplate>
+</Modal>
+
+<Button Color="ButtonColor.Primary" Outline="true" @onclick="OnShowModalClick">Создать чат</Button>
+
+@code {
+    private Modal _modal = default!;
+    private string _userDisplayNumberFilter = string.Empty;
+    private const string UserNameFilter = "UserName";
+    
+    public List<SearchUsersResponse.SearchUserModel> SelectedUsers { get; set; } = new();
+    
+    [Inject] IUsersApi UsersApi { get; init; } = default!;
+    [Inject] ITokenManager TokenManager { get; init; } = default!;
+    [Inject] IChatApi ChatApi { get; init; } = default!;
+    [Inject] NavigationManager NavigationManager { get; init; } = default!;
+
+    private async Task OnShowModalClick()
+    {
+        await _modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await _modal.HideAsync();
+    }
+
+    private async Task<AutoCompleteDataProviderResult<SearchUsersResponse.SearchUserModel>> UsersDataProvider(
+        AutoCompleteDataProviderRequest<SearchUsersResponse.SearchUserModel> request)
+    {
+        (bool success, string? accessToken) = await TokenManager.GetAccessToken();
+        
+        if (!success || accessToken is null)
+        {
+            throw new InvalidOperationException("Can't get access token");
+        }
+        
+        SearchUsersRequest searchUsersRequest = new([request.Filter.Value]);
+        SearchUsersResponse response = await UsersApi.SearchUsers(
+            TokenManager.ToBearer(accessToken),
+            searchUsersRequest,
+            request.CancellationToken);
+        
+        return new AutoCompleteDataProviderResult<SearchUsersResponse.SearchUserModel>
+        {
+            Data = response.Users,
+            TotalCount = response.Users.Count
+        };
+    }
+
+    private void OnAutoCompleteChanged(SearchUsersResponse.SearchUserModel? user)
+    {
+        if (user is not null)
+        {
+            SelectedUsers.Add(user);
+        }
+    }
+
+    private void OnDeleteSelectedUser(int index)
+    {
+        SelectedUsers.RemoveAt(index);
+    }
+
+    private async Task OnCreateChat()
+    {
+        if (SelectedUsers.Count == 0)
+        {
+            return;
+        }
+        
+        Guid[] companionIds = SelectedUsers
+            .Select(x => x.Id)
+            .ToArray();
+
+        string bearerToken = await TokenManager.GetBearerAccessToken();
+        Guid chatId = await ChatApi.CreateChat(new CreateChatRequest(companionIds), bearerToken);
+        SelectedUsers.Clear();
+        await OnHideModalClick();
+        NavigationManager.NavigateTo($"chats/{chatId}", forceLoad: true);
+    }
+}

@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatting-api
+  labels:
+    app: chatting-api
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatting-api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: chatting-api
+    spec:
+      containers:
+        - name: chatting-api
+          image: docker.io/nightv1sion/express-messenger/chatting-api:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: https
+              containerPort: 8443
+          envFrom:
+            - configMapRef:
+                name: chatting-api-configmap
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+      terminationGracePeriodSeconds: 180

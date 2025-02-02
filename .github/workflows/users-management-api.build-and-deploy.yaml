@@ -1,0 +1,86 @@
+name: "Build and Deploy Users Management API"
+on:
+  push:
+    branches: ["master"]
+    paths:
+      [
+        "src/Common/**",
+        "src/SharedKernel/**",
+        "src/UsersManagement/**",
+        "infra/users-management-api/**",
+        ".github/workflows/users-management-api.build-and-deploy.yaml",
+      ]
+  workflow_dispatch:
+jobs:
+  build:
+    name: "Build Users Management API"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v3
+
+      - name: "Set up Docker Buildx"
+        uses: docker/setup-buildx-action@v2
+
+      - name: "Login to GitHub Registry"
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+
+      - name: "Publish Image"
+        uses: docker/build-push-action@v4
+        with:
+          context: ./src
+          file: ./src/UsersManagement/ExpressMessenger.UsersManagement.Api/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REGISTRY_USERNAME }}/express-messenger/users-management-api:latest
+          platforms: linux/amd64
+          provenance: false
+
+  deploy:
+    name: "Deploy Users Management API"
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: "Copy Kubernetes files to server"
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          proxy_host: ${{ secrets.PROXY_SSH_HOST }}
+          proxy_username: ${{ secrets.PROXY_SSH_USERNAME }}
+          proxy_password: ${{ secrets.PROXY_SSH_PASSWORD }}
+          proxy_port: ${{ secrets.PROXY_SSH_PORT }}
+          source: "infra/users-management-api/"
+          target: /home/${{ secrets.SSH_USERNAME }}/github/express-messenger/users-management-api/k8s
+          strip_components: 2
+
+      - name: "Apply Kubernetes files"
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          proxy_host: ${{ secrets.PROXY_SSH_HOST }}
+          proxy_username: ${{ secrets.PROXY_SSH_USERNAME }}
+          proxy_password: ${{ secrets.PROXY_SSH_PASSWORD }}
+          proxy_port: ${{ secrets.PROXY_SSH_PORT }}
+          script: |
+            echo ${{ secrets.SSH_PASSWORD }} | sudo cd /home/${{ secrets.SSH_USERNAME }}/github/express-messenger/users-management-api/k8s
+
+            for FILE in $(ls -1 *.yaml | sort); do
+                if [ -f "$FILE" ]; then
+                    echo ${{ secrets.SSH_PASSWORD }} | sudo -S microk8s kubectl apply -f "$FILE"
+                fi
+            done
+
+            echo ${{ secrets.SSH_PASSWORD }} | sudo -S rm -rf /home/${{ secrets.SSH_USERNAME }}/github/express-messenger/users-management-api/k8s

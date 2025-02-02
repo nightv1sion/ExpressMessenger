@@ -26,18 +26,26 @@ internal sealed class GetChatHandler(
             .Select(member => member.UserId)
             .ToHashSet();
         
-        IReadOnlyDictionary<Guid, uint> displayNumbers = await userInfoProvider.GetDisplayNumbers(
+        IReadOnlyDictionary<Guid, string> userNames = await userInfoProvider.GetUserNames(
             userIds,
             cancellationToken);
 
         return new ChatModel(
-                chat.Id,
-                chat.Members
-                    .Where(member => member.UserId != request.UserId)
-                    .Select(member => new ChatModel.CompanionModel(
-                        member.UserId,
-                        displayNumbers[member.UserId]))
-                    .ToArray(),
-                chat.Type);
+            chat.Id,
+            chat.Type,
+            chat.Members
+                .Where(member => member.UserId != request.UserId)
+                .Select(member => new ChatModel.CompanionModel(
+                    member.UserId,
+                    userNames[member.UserId]))
+                .ToArray(),
+            chat.Messages
+                .Select(x => new ChatModel.MessageModel(
+                    x.Id,
+                    userNames[x.SenderId],
+                    x.Text,
+                    x.SenderId == request.UserId,
+                    x.Sent))
+                .ToArray());
     }
 }

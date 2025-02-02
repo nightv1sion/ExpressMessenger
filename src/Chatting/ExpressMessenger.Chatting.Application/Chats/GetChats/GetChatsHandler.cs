@@ -26,7 +26,7 @@ internal sealed class GetChatsHandler(
             .SelectMany(x => x.Members.Select(member => member.UserId))
             .ToHashSet();
         
-        IReadOnlyDictionary<Guid, uint> displayNumbers = await userInfoProvider.GetDisplayNumbers(
+        IReadOnlyDictionary<Guid, string> userNames = await userInfoProvider.GetUserNames(
             userIds,
             cancellationToken);
 
@@ -37,7 +37,7 @@ internal sealed class GetChatsHandler(
                     .Where(member => member.UserId != request.UserId)
                     .Select(member => new ChatModel.CompanionModel(
                         member.UserId,
-                        displayNumbers[member.UserId]))
+                        userNames[member.UserId]))
                     .ToArray(),
                 x.Type))
             .ToArray();

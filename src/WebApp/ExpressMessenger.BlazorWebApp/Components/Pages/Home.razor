@@ -1,12 +1,48 @@
 ﻿@page "/"
+@using ExpressMessenger.BlazorWebApp.Authentication
+@using ExpressMessenger.BlazorWebApp.Components.Chats
+@inject ITokenManager TokenManager;
 
-<PageTitle>Blazor Bootstrap - Web App (.NET 9) - Starter Template</PageTitle>
+<div class="h-100 d-flex flex-column justify-content-between">
+    <div>
+        <h1>Привет!</h1>
+        Это анонимный мессенджер, позволяющий моментально обмениваться сообщениями.
+    </div>
 
-<h1>Hello, world!</h1>
+    @if (_isUserRegistered)
+    {
+        <div class="text-center mt-5">
+            <CreateChatModal />
+        </div>
+    }
+    else
+    {
+        <div class="text-center mt-5">
+            <p>Чтобы начать общение, введите желаемое имя пользователя.</p>
+            <RegisterUserModal/>
+        </div>
+    }
+    
+</div>
 
-Welcome to your new Blazor Bootstrap - Web App (.NET 9).
-<br />
-<br />
-Interactive render mode: Server
-<br />
-Interactivity location: Global
+@code {
+    private bool _isUserRegistered;
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+        
+        (bool success, string? accessToken) = await TokenManager.GetAccessToken();
+
+        if (!success || accessToken is null)
+        {
+            return;
+        }
+
+        _isUserRegistered = true;
+        StateHasChanged();
+    }
+}

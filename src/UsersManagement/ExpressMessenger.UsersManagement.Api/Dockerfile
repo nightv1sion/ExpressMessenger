@@ -15,6 +15,7 @@ COPY ["UsersManagement/ExpressMessenger.UsersManagement.Application/ExpressMesse
 COPY ["UsersManagement/ExpressMessenger.UsersManagement.Domain/ExpressMessenger.UsersManagement.Domain.csproj", "UsersManagement/ExpressMessenger.UsersManagement.Domain/"]
 COPY ["UsersManagement/ExpressMessenger.UsersManagement.Infrastructure/ExpressMessenger.UsersManagement.Infrastructure.csproj", "UsersManagement/ExpressMessenger.UsersManagement.Infrastructure/"]
 COPY ["Common/ExpressMessenger.Common.Infrastructure/ExpressMessenger.Common.Infrastructure.csproj", "Common/ExpressMessenger.Common.Infrastructure/"]
+COPY ["SharedKernel/ExpressMessenger.SharedKernel.ApiContracts/ExpressMessenger.SharedKernel.ApiContracts.csproj", "SharedKernel/ExpressMessenger.SharedKernel.ApiContracts/"]
 RUN dotnet restore "UsersManagement/ExpressMessenger.UsersManagement.Api/ExpressMessenger.UsersManagement.Api.csproj"
 COPY . .
 WORKDIR "/src/UsersManagement/ExpressMessenger.UsersManagement.Api"

@@ -7,7 +7,9 @@ namespace ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authenticat
 public interface IAuthenticationApi
 {
     [Post("/authentication/register")]
-    Task<RegisterUserResponse> RegisterUser(CancellationToken cancellationToken = default);
+    Task<RegisterUserResponse> RegisterUser(
+        RegisterUserRequest request,
+        CancellationToken cancellationToken = default);
 
     [Post("/authentication/refresh-token")]
     Task<IApiResponse<RefreshTokenResponse>> RefreshToken(

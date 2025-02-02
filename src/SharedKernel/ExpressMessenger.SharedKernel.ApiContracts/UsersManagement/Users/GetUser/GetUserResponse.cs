@@ -2,4 +2,4 @@ namespace ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users.GetUs
 
 public sealed record GetUserResponse(
     Guid UserId,
-    uint DisplayNumber);
+    string UserName);

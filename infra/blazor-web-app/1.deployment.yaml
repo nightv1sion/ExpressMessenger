@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blazor-web-app
+  labels:
+    app: blazor-web-app
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blazor-web-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: blazor-web-app
+    spec:
+      containers:
+        - name: blazor-web-app
+          image: docker.io/nightv1sion/express-messenger/blazor-web-app:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: https
+              containerPort: 8443
+          envFrom:
+            - configMapRef:
+                name: blazor-web-app-configmap
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+      terminationGracePeriodSeconds: 180

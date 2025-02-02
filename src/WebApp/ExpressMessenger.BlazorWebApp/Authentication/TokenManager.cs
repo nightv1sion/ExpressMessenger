@@ -71,6 +71,18 @@ public sealed class TokenManager(
     {
         return $"Bearer {token}";
     }
+    
+    public async Task<string> GetBearerAccessToken(CancellationToken cancellationToken)
+    {
+        (bool success, string? accessToken) = await GetAccessToken(cancellationToken);
+        
+        if (!success || accessToken is null)
+        {
+            throw new InvalidOperationException("Can't get access token");
+        }
+        
+        return ToBearer(accessToken);
+    }
 
     sealed record UserLocalStorageInfo(
         Guid UserId,
