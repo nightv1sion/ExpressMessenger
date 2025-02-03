@@ -62,11 +62,11 @@ metadata:
   namespace: express-messenger
 spec:
   type: LoadBalancer
-  loadBalancerIP: 10.7.0.128
+  loadBalancerIP: 192.168.1.199
   selector:
     app: aspire-dashboard
   ports:
     - name: dashboard-ui
       protocol: TCP
-      port: 18888
+      port: 80
       targetPort: 18888
