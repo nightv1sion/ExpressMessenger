@@ -31,6 +31,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: chatting-api-configmap
+            - secretRef:
+                name: chatting-api-secret
           resources:
             requests:
               cpu: "500m"

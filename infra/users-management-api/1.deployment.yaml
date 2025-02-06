@@ -31,6 +31,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: users-management-api-configmap
+            - secretRef:
+                name: users-management-api-secret
           resources:
             requests:
               cpu: "500m"
