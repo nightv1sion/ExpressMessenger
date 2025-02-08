@@ -7,7 +7,6 @@ metadata:
     app: blazor-web-app
   namespace: express-messenger
 spec:
-  minReadySeconds: 60
   replicas: 1
   selector:
     matchLabels:
