@@ -13,7 +13,9 @@ spec:
     matchLabels:
       app: chatting-api
   strategy:
-    type: Recreate
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
   template:
     metadata:
       labels:
