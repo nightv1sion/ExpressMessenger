@@ -8,9 +8,7 @@ data:
   OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
   OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: in_memory
   ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
-  HTTP_PORTS: "8080"
-  services__users-management-api__http__0: http://users-management-api:8080
-  services__chatting-api__http__0: http://chatting-api:8080
-  OTEL_EXPORTER_OTLP_ENDPOINT: http://aspire-dashboard:18889
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://aspire-dashboard.express-messenger:18889
   OTEL_SERVICE_NAME: blazor-web-app
-  ASPNETCORE_URLS: http://+:8080;
+  Apis__UsersManagementApi__Url: http://gateway.express-messenger/api/users-management
+  Apis__ChattingApi__Url: http://gateway.express-messenger/api/chatting
