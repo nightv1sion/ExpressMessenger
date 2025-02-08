@@ -37,6 +37,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REGISTRY_USERNAME }}/express-messenger-gateway:latest
+            ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REGISTRY_USERNAME }}/express-messenger-gateway:${{ github.sha }}
           platforms: linux/amd64
           provenance: false
 
@@ -84,6 +85,6 @@ jobs:
                 fi
             done
 
-            echo ${{ secrets.SSH_PASSWORD }} | sudo -S microk8s kubectl rollout restart deployment/gateway -n express-messenger
+            echo ${{ secrets.SSH_PASSWORD }} | sudo -S microk8s kubectl set image deployment/gateway gateway=${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REGISTRY_USERNAME }}/express-messenger-gateway:${{ github.sha }} -n express-messenger
 
             echo ${{ secrets.SSH_PASSWORD }} | sudo -S rm -rf /home/${{ secrets.SSH_USERNAME }}/github/express-messenger-gateway/k8s

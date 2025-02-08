@@ -19,7 +19,6 @@ spec:
       labels:
         app: aspire-dashboard
     spec:
-      terminationGracePeriodSeconds: 30
       containers:
         - name: aspire-dashboard
           image: mcr.microsoft.com/dotnet/aspire-dashboard:8.0
