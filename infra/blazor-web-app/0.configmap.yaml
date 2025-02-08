@@ -10,5 +10,5 @@ data:
   ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
   OTEL_EXPORTER_OTLP_ENDPOINT: http://aspire-dashboard.express-messenger:18889
   OTEL_SERVICE_NAME: blazor-web-app
-  Apis__UsersManagementApi__Url: http://gateway.express-messenger/api/users-management
-  Apis__ChattingApi__Url: http://gateway.express-messenger/api/chatting
+  Apis__UsersManagement__Url: http://gateway.express-messenger/api/users-management
+  Apis__Chatting__Url: http://gateway.express-messenger/api/chatting
