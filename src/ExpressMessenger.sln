@@ -46,7 +46,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Chatting.A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{E33C61CA-B75A-455B-A6A3-8717DB2A2518}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Gateway", "ExpressMessenger.Gateway\ExpressMessenger.Gateway.csproj", "{AEBE19E7-E65B-4BBC-A2A8-A0C4562B84E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Gateway", "Gateway\ExpressMessenger.Gateway\ExpressMessenger.Gateway.csproj", "{AEBE19E7-E65B-4BBC-A2A8-A0C4562B84E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

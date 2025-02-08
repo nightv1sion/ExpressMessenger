@@ -13,11 +13,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Common\ExpressMessenger.Common.Api\ExpressMessenger.Common.Api.csproj" />
+      <ProjectReference Include="..\..\Common\ExpressMessenger.Common.Api\ExpressMessenger.Common.Api.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
+      <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
