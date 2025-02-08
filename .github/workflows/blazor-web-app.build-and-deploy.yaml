@@ -84,4 +84,6 @@ jobs:
                 fi
             done
 
+            echo ${{ secrets.SSH_PASSWORD }} | sudo -S microk8s kubectl rollout restart deployment/blazor-web-app -n express-messenger
+
             echo ${{ secrets.SSH_PASSWORD }} | sudo -S rm -rf /home/${{ secrets.SSH_USERNAME }}/github/express-messenger-blazor-web-app/k8s
