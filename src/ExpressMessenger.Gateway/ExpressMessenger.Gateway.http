@@ -1,0 +1,10 @@
+@UsersManagementApi = http://localhost:5700
+
+POST {{UsersManagementApi}}/api/users-management/authentication/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username": "test"
+}
+###

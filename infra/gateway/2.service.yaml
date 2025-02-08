@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: blazor-web-app
+  name: gateway
   namespace: express-messenger
 spec:
   type: ClusterIP
   selector:
-    app: blazor-web-app
+    app: gateway
   ports:
     - name: http
       port: 80
@@ -17,13 +17,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: blazor-web-app-load-balancer
+  name: gateway-load-balancer
   namespace: express-messenger
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.198
+  loadBalancerIP: 192.168.1.197
   selector:
-    app: blazor-web-app
+    app: gateway
   ports:
     - name: http
       protocol: TCP

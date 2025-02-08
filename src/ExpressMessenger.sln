@@ -44,6 +44,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Chatting.I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Chatting.Api", "Chatting\ExpressMessenger.Chatting.Api\ExpressMessenger.Chatting.Api.csproj", "{91FE71E4-F899-45EA-A7ED-5828155F1E06}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{E33C61CA-B75A-455B-A6A3-8717DB2A2518}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressMessenger.Gateway", "ExpressMessenger.Gateway\ExpressMessenger.Gateway.csproj", "{AEBE19E7-E65B-4BBC-A2A8-A0C4562B84E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +118,10 @@ Global
 		{91FE71E4-F899-45EA-A7ED-5828155F1E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91FE71E4-F899-45EA-A7ED-5828155F1E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91FE71E4-F899-45EA-A7ED-5828155F1E06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEBE19E7-E65B-4BBC-A2A8-A0C4562B84E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEBE19E7-E65B-4BBC-A2A8-A0C4562B84E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEBE19E7-E65B-4BBC-A2A8-A0C4562B84E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEBE19E7-E65B-4BBC-A2A8-A0C4562B84E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1CE71C1A-9471-4230-9CAF-0054BF3FC8CD} = {75AF2D97-29DC-4FEC-B973-A63090B01C17}
@@ -131,5 +139,6 @@ Global
 		{8A60D4AA-4CD8-4030-99B2-0E125767636B} = {6F0F7FF0-519A-42B2-9E4B-7DBDAC188529}
 		{65FD23D4-F917-4BF8-AE08-F50A778EE349} = {6F0F7FF0-519A-42B2-9E4B-7DBDAC188529}
 		{91FE71E4-F899-45EA-A7ED-5828155F1E06} = {6F0F7FF0-519A-42B2-9E4B-7DBDAC188529}
+		{AEBE19E7-E65B-4BBC-A2A8-A0C4562B84E6} = {E33C61CA-B75A-455B-A6A3-8717DB2A2518}
 	EndGlobalSection
 EndGlobal
