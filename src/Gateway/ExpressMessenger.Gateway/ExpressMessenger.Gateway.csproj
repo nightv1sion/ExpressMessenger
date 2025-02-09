@@ -22,16 +22,4 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <Content Include="ocelot.development.json">
-        <Link>ocelot.development.json</Link>
-      </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="ocelot.production.json">
-        <Link>ocelot.production.json</Link>
-      </Content>
-    </ItemGroup>
-
 </Project>
