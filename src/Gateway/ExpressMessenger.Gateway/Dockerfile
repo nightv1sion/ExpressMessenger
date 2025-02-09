@@ -19,8 +19,7 @@ RUN dotnet build "ExpressMessenger.Gateway.csproj" -c $BUILD_CONFIGURATION -o /a
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "ExpressMessenger.Gateway.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-COPY ["Gateway/ExpressMessenger.Gateway/ocelot.*.json", "/app/"]
+COPY ["Gateway/ExpressMessenger.Gateway/ocelot.*.json", "/app/publish"]
 
 FROM base AS final
 WORKDIR /app
