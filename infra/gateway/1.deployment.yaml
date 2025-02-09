@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: docker.io/nightv1sion/express-messenger-gateway:latest
+          image: docker.io/nightv1sion/express-messenger-gateway:$IMAGE_TAG
           imagePullPolicy: Always
           ports:
             - name: http
