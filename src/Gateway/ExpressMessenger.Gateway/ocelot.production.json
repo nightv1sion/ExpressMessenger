@@ -25,5 +25,8 @@
       "UpstreamPathTemplate": "api/chatting/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     }
-  ]
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://gateway.express-messenger"
+  }
 }
