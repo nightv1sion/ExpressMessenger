@@ -10,3 +10,4 @@ data:
   ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
   OTEL_EXPORTER_OTLP_ENDPOINT: http://aspire-dashboard.express-messenger:18889
   OTEL_SERVICE_NAME: users-management-api
+  ASPNETCORE_ENVIRONMENT: Production

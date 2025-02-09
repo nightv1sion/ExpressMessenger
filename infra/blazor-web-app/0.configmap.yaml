@@ -12,3 +12,4 @@ data:
   OTEL_SERVICE_NAME: blazor-web-app
   Apis__UsersManagement__Url: http://gateway.express-messenger/api/users-management
   Apis__Chatting__Url: http://gateway.express-messenger/api/chatting
+  ASPNETCORE_ENVIRONMENT: Production

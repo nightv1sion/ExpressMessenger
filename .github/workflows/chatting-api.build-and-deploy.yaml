@@ -81,6 +81,7 @@ jobs:
 
             for FILE in $(ls -1 *.yaml | sort); do
                 if [ -f "$FILE" ]; then
+                    sed -i "s/\$IMAGE_TAG/${{ github.sha }}/g" "$FILE"
                     echo ${{ secrets.SSH_PASSWORD }} | sudo -S microk8s kubectl apply -f "$FILE"
                 fi
             done
