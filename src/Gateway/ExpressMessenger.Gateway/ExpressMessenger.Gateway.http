@@ -1,10 +1,9 @@
 @UsersManagementApi = http://localhost:5700
 
-POST {{UsersManagementApi}}/api/users-management/authentication/register
+POST {{UsersManagementApi}}/api/users-management/users/usernames/validate
 Accept: application/json
 Content-Type: application/json
 
 {
-    "username": "test"
+    "userName": "test123"
 }
-###

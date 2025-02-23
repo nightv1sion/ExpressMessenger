@@ -1,5 +1,7 @@
+using ExpressMessenger.Chatting.Api.Notifications;
 using ExpressMessenger.Chatting.Application;
 using ExpressMessenger.Chatting.Application.Chats;
+using ExpressMessenger.Chatting.Application.Notifications;
 using ExpressMessenger.Chatting.Infrastructure;
 using ExpressMessenger.Chatting.Infrastructure.Persistence;
 using ExpressMessenger.Common.Api;
@@ -57,6 +59,10 @@ builder.Services.AddProblemDetails(options =>
     };
 });
 
+builder.Services
+    .AddScoped<IUserNotifier, UserNotifier>()
+    .AddSignalR();
+
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();
@@ -80,6 +86,7 @@ app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<NotificationHub>("/notifications/hub");
 app.MapEndpoints();
 
 app.Run();

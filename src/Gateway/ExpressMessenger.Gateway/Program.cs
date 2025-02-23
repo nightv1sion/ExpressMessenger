@@ -33,6 +33,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddOcelot();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -51,6 +52,7 @@ if (app.Environment.IsDevelopment())
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
+app.UseWebSockets();
 await app.UseOcelot();
 
 app.Run();

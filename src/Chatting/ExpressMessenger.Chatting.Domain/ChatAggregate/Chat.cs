@@ -12,6 +12,8 @@ public sealed class Chat : AggregateRoot
     public IReadOnlyCollection<Message> Messages => _messages.AsReadOnly();
 
     public IReadOnlyCollection<Member> Members => _members.AsReadOnly();
+
+    public DateTimeOffset Created { get; private init; }
     
     public void SendMessage(
         string text,
@@ -41,6 +43,7 @@ public sealed class Chat : AggregateRoot
         {
             Id = Guid.NewGuid(),
             Type = ChatType.Personal,
+            Created = DateTimeOffset.UtcNow,
         };
 
         chat.AddMember(initiatorId);
@@ -56,6 +59,7 @@ public sealed class Chat : AggregateRoot
         {
             Id = Guid.NewGuid(),
             Type = ChatType.Personal,
+            Created = DateTimeOffset.UtcNow,
         };
 
         chat.AddMember(initiatorId);

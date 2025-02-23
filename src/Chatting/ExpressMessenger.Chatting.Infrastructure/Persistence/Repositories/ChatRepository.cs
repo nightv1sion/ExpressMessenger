@@ -12,6 +12,11 @@ internal sealed class ChatRepository(
     {
         return await dbContext.Set<Chat>()
             .Where(x => x.Members.Any(member => member.UserId == userId))
+            .OrderByDescending(chat => chat.Messages
+                .OrderBy(message => message.Sent)
+                .Last()
+                .Sent)
+            .ThenByDescending(chat => chat.Created)
             .ToArrayAsync(cancellationToken);
     }
 

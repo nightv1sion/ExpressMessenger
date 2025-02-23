@@ -3,11 +3,12 @@
 @using ExpressMessenger.SharedKernel.ApiContracts.Chatting.GetChats
 @using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users
 @using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users.GetUser
-@using ExpressMessenger.BlazorWebApp.Components.Pages
+@using ExpressMessenger.BlazorWebApp.Notifications
 @inherits LayoutComponentBase
 @inject ITokenManager TokenManager;
 @inject IUsersApi UsersApi;
 @inject IChatApi ChatApi;
+@inject ChattingSignalRService ChattingSignalRService;
 
 <BlazorBootstrapLayout HeaderSectionCssClass="d-flex justify-content-between">
     <HeaderSection>
@@ -25,7 +26,8 @@
                   Title="ExpressMessenger"
                   BadgeText="1.0.0"
                   DataProvider="Sidebar2DataProvider"
-                  WidthUnit="Unit.Px" />
+                  WidthUnit="Unit.Px"
+                  @key="_chatsVersion"/>
     </SidebarSection>
     
     <ContentSection>
@@ -35,25 +37,14 @@
 </BlazorBootstrapLayout>
 
 @code {
-    private IReadOnlyCollection<GetChatsResponse.ChatModel>? _chats;
+    private IReadOnlyCollection<GetChatsResponse.ChatModel> _chats = [];
     private string? _userName;
+    private int _chatsVersion = 0;
+    
 
-    private async Task<Sidebar2DataProviderResult?> Sidebar2DataProvider(Sidebar2DataProviderRequest request)
+    private Task<Sidebar2DataProviderResult> Sidebar2DataProvider(Sidebar2DataProviderRequest request)
     {
-        if (_chats is null)
-        {
-            (bool success, string? accessToken) = await TokenManager.GetAccessToken();
-
-            if (!success || accessToken is null)
-            {
-                return null;
-            }
-            
-            var chats = await LoadChats(TokenManager.ToBearer(accessToken));
-            _chats = chats.Chats;
-        }
-
-        return new Sidebar2DataProviderResult
+        return Task.FromResult(new Sidebar2DataProviderResult
         {
             Data = _chats
                 .Select(x => new NavItem
@@ -61,15 +52,26 @@
                     Id = x.ChatId.ToString(),
                     Href = $"/chats/{x.ChatId}",
                     IconName = IconName.Messenger,
-                    Text = string.Join(", ", x.Companions.Select(companion => companion.UserName))
+                    Text = string.Join(", ", x.Companions.Select(companion => companion.UserName)),
                 })
                 .ToArray()
-        };
+        });
     }
 
-    private async Task<GetChatsResponse> LoadChats(string bearerToken)
+    private async Task LoadChats()
     {
-        return await ChatApi.GetChats(bearerToken);
+        (bool success, string? accessToken) = await TokenManager.GetAccessToken();
+
+        if (!success || accessToken is null)
+        {
+            return;
+        }
+        
+        var response = await ChatApi.GetChats(TokenManager.ToBearer(accessToken));
+        _chats = response.Chats;
+        _chatsVersion++;
+        
+        StateHasChanged();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -89,6 +91,17 @@
         GetUserResponse response = await UsersApi.GetUser(TokenManager.ToBearer(accessToken));
         _userName = response.UserName;
         
-        StateHasChanged();
+        // await ChattingSignalRService.StartConnectionAsync();
+        await ChattingSignalRService.ListenNewChatCreated(OnNewChatCreated);
+        
+        await LoadChats();
+    }
+
+    public async Task OnNewChatCreated()
+    {
+        await InvokeAsync(async () =>
+        {
+            await LoadChats();
+        });
     }
 }

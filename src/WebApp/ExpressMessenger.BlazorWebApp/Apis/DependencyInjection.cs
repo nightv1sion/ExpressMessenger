@@ -1,3 +1,4 @@
+using ExpressMessenger.BlazorWebApp.Notifications;
 using ExpressMessenger.SharedKernel.ApiContracts.Chatting;
 using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Authentication;
 using ExpressMessenger.SharedKernel.ApiContracts.UsersManagement.Users;
@@ -25,6 +26,8 @@ public static class DependencyInjection
             .AddRefitClient<IChatApi>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(apisSettings.Chatting.Url));
 
+        services.AddScoped<ChattingSignalRService>();
+        
         services.AddTransient<BearerTokenDelegatingHandler>();
         
         return services;

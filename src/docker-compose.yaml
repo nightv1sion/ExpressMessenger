@@ -1,4 +1,20 @@
 services:
+  express-messenger.blazor-web-app:
+    container_name: ExpressMessenger.BlazorWebApp
+    build:
+      context: .
+      dockerfile: WebApp/ExpressMessenger.BlazorWebApp/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      Apis__UsersManagement__Url: http://host.docker.internal:5700/api/users-management
+      Apis__Chatting__Url: http://host.docker.internal:5700/api/chatting
+    labels:
+      com.jetbrains.rider.debug: "true"
+    links:
+      - express-messenger.gateway
+
   express-messenger.users-management:
     container_name: ExpressMessenger.UsersManagement
     build:
@@ -8,9 +24,38 @@ services:
       - "5500:8080"
     environment:
       ConnectionStrings__Database: Host=express-messenger.postgres;Port=5432;Database=express-messenger.users-management;Username=postgres;Password=postgres;
+      ASPNETCORE_ENVIRONMENT: Development
     labels:
       com.jetbrains.rider.debug: "true"
-      
+    links:
+      - express-messenger.postgres
+
+  express-messenger.chatting:
+    container_name: ExpressMessenger.Chatting
+    build:
+      context: .
+      dockerfile: Chatting/ExpressMessenger.Chatting.Api/Dockerfile
+    ports:
+      - "5600:8080"
+    environment:
+      ConnectionStrings__Database: Host=express-messenger.postgres;Port=5432;Database=express-messenger.chatting;Username=postgres;Password=postgres;
+      ASPNETCORE_ENVIRONMENT: Development
+      Apis__UsersManagement__Url: http://host.docker.internal:5500
+    labels:
+      com.jetbrains.rider.debug: "true"
+
+  express-messenger.gateway:
+    container_name: ExpressMessenger.Gateway
+    build:
+      context: .
+      dockerfile: Gateway/ExpressMessenger.Gateway/Dockerfile
+    ports:
+      - "5700:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    labels:
+      com.jetbrains.rider.debug: "true"
+
   express-messenger.postgres:
     image: postgres:17
     container_name: ExpressMessenger.Postgres

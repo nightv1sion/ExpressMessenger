@@ -1,48 +1,23 @@
 @page "/chats/{chatId:guid}"
 @using ExpressMessenger.BlazorWebApp.Authentication
+@using ExpressMessenger.BlazorWebApp.Notifications
 @using ExpressMessenger.SharedKernel.ApiContracts.Chatting
 @using ExpressMessenger.SharedKernel.ApiContracts.Chatting.GetChat
 @using ExpressMessenger.SharedKernel.ApiContracts.Chatting.SendMessage
+@using ExpressMessenger.BlazorWebApp.Components.Chats
 @inject ITokenManager TokenManager;
 @inject IChatApi ChatApi
 @inject IJSRuntime JsRuntime
+@inject ChattingSignalRService ChattingSignalRService
 
-<div class="container">
+<div class="container" @key='$"{_chatId}{_chatVersion}"'>
     <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-header bg-primary text-white text-center">
                     @ChatName
                 </div>
-                <div class="card-body chat-container" id="chat-container" style="height: 80vh; overflow-y: auto;">
-                    <ul class="list-unstyled">
-                        @foreach (var message in _chat?.Messages ?? [])
-                        {
-                            <li class="mb-2">
-                                <div class="d-flex justify-content-@(message.IsMine ? "end" : "start")">
-                                    <div class="alert @(message.IsMine ? "alert-primary" : "alert-secondary")">
-                                        @if (message.IsMine)
-                                        {
-                                            <div><strong>Вы</strong></div>
-                                        }
-                                        else
-                                        {
-                                            <div><strong>@message.SenderUserName</strong></div>
-                                        }
-                                        
-                                        <div>
-                                            @message.Text
-                                        </div>
-
-                                        <small class="text-muted">
-                                            @message.Sent.ToString("HH:mm dd.MM.yyyy")
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
+                <ChatMessageList Messages="_messages"/>
                 <div class="card-footer">
                     <div class="input-group">
                         <input type="text" class="form-control" @bind="_newMessage" placeholder="Напишите сообщение" />
@@ -56,13 +31,41 @@
 
 @code {
     private GetChatResponse.ChatModel? _chat;
+    private IReadOnlyCollection<GetChatResponse.ChatModel.MessageModel> _messages = [];
     private string _newMessage = string.Empty; 
     private string ChatName => string.Join(
         ", ",
         _chat?.Companions.Select(companion => companion.UserNames) ?? Array.Empty<string>());
+
+    private int _chatVersion;
+    private Guid _chatId;
     
     [Parameter]
-    public Guid ChatId { get; init; }
+    public Guid ChatId
+    {
+        get => _chatId;
+        set
+        {
+            if (_chatId == value)
+            {
+                return;
+            }
+            
+            _ = LoadChat(value);
+            _chatId = value;
+        }
+    }
+    
+    private async Task LoadChat(Guid chatId)
+    {
+        string accessToken = await TokenManager.GetBearerAccessToken();
+        GetChatResponse response = await ChatApi.GetChat(accessToken, chatId);
+        _chat = response.Chat;
+        _messages = _chat.Messages;
+        _chatVersion++;
+        StateHasChanged();
+        await JsRuntime.InvokeVoidAsync("scrollToBottom", "chat-container");
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -71,24 +74,20 @@
             return;
         }
         
-        (bool success, string? accessToken) = await TokenManager.GetAccessToken();
-        
-        if (!success || accessToken is null)
+        await ChattingSignalRService.ListenNewMessageReceived(OnNewMessageReceived);
+    }
+
+    private async Task OnNewMessageReceived(string chatId)
+    {
+        if (chatId != ChatId.ToString())
         {
-            throw new Exception("Something went wrong");
+            return;
         }
-        
-        GetChatResponse? chat = await ChatApi.GetChat(TokenManager.ToBearer(accessToken), ChatId);
-        
-        if (chat is null)
+
+        await InvokeAsync(async () =>
         {
-            throw new Exception("Something went wrong");
-        }
-        
-        _chat = chat.Chat;
-        
-        StateHasChanged();
-        await JsRuntime.InvokeVoidAsync("scrollToBottom", "chat-container");
+            await LoadChat(ChatId);
+        });
     }
 
     private async Task SendMessage()
@@ -98,30 +97,15 @@
             return;
         }
 
-        (bool success, string? accessToken) = await TokenManager.GetAccessToken();
-
-        if (!success || accessToken is null)
-        {
-        throw new Exception("Something went wrong");
-        }
+        string accessToken = await TokenManager.GetBearerAccessToken();
 
         await ChatApi.SendMessage(
             ChatId,
             new SendMessageRequest(_newMessage),
-            TokenManager.ToBearer(accessToken));
+            accessToken);
         
         _newMessage = string.Empty;
-        
-        GetChatResponse? response = await ChatApi.GetChat(TokenManager.ToBearer(accessToken), ChatId);
-        
-        if (response is null)
-        {
-            throw new Exception("Something went wrong");
-        }
-
-        _chat = response.Chat;
-        
-        StateHasChanged();
+        await LoadChat(ChatId);
         await JsRuntime.InvokeVoidAsync("scrollToBottom", "chat-container");
     }
 }

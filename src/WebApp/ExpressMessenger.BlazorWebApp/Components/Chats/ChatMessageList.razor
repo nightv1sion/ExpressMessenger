@@ -1,0 +1,36 @@
+@using ExpressMessenger.SharedKernel.ApiContracts.Chatting.GetChat
+
+<div class="card-body chat-container" id="chat-container" style="height: 80vh; overflow-y: auto;">
+    <ul class="list-unstyled">
+        @foreach (var message in Messages)
+        {
+            <li class="mb-2">
+                <div class="d-flex justify-content-@(message.IsMine ? "end" : "start")">
+                    <div class="alert @(message.IsMine ? "alert-primary" : "alert-secondary")">
+                        @if (message.IsMine)
+                        {
+                            <div><strong>Вы</strong></div>
+                        }
+                        else
+                        {
+                            <div><strong>@message.SenderUserName</strong></div>
+                        }
+
+                        <div>
+                            @message.Text
+                        </div>
+
+                        <small class="text-muted">
+                            @message.Sent.ToString("HH:mm dd.MM.yyyy")
+                        </small>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+
+@code {
+    [Parameter] public IReadOnlyCollection<GetChatResponse.ChatModel.MessageModel> Messages { get; init; } = [];
+}
