@@ -46,4 +46,18 @@ internal sealed class UserRepository(
         
         return await query.ToArrayAsync(cancellationToken);
     }
+
+    public async Task<IReadOnlyCollection<User>> GetBy(
+        DateTimeOffset refreshTokenExpiredBefore,
+        CancellationToken cancellationToken)
+    {
+        return await context.Set<User>()
+            .Where(x => x.RefreshTokenExpired < refreshTokenExpiredBefore)
+            .ToArrayAsync(cancellationToken);
+    }
+
+    public void Remove(User user)
+    {
+        context.Set<User>().Remove(user);
+    }
 }

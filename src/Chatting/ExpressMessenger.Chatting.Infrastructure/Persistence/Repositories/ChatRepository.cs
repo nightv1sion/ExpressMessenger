@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 namespace ExpressMessenger.Chatting.Infrastructure.Persistence.Repositories;
 
 internal sealed class ChatRepository(
-    ApplicationDbContext dbContext) : IChatRepository
+    ApplicationDbContext dbContext)
+    : IChatRepository
 {
     public async Task<IReadOnlyCollection<Chat>> GetUserChats(
         Guid userId,
@@ -40,5 +41,10 @@ internal sealed class ChatRepository(
             .Where(x => x.Members.All(member => userIds.Contains(member.UserId)))
             .Where(x => x.Members.Count == userIds.Count)
             .SingleOrDefaultAsync(cancellationToken);
+    }
+
+    public void Remove(Chat chat)
+    {
+        dbContext.Set<Chat>().Remove(chat);
     }
 }

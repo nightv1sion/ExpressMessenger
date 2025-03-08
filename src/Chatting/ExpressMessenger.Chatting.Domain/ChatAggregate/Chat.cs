@@ -67,7 +67,16 @@ public sealed class Chat : AggregateRoot
 
         return chat;
     }
-    
+
+    public void RemoveMember(Guid userId)
+    {
+        _members.RemoveAll(member => member.UserId == userId);
+    }
+
+    public void RemoveMemberMessages(Guid userId)
+    {
+        _messages.RemoveAll(message => message.SenderId == userId);
+    }
 
     private Chat() { }
 }

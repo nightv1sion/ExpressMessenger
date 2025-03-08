@@ -13,5 +13,6 @@
   <ItemGroup>
     <Content Include=".env" />
     <Content Include="docker-compose.yaml" />
+    <Content Include="kafka_server_jaas.conf" />
   </ItemGroup>
 </Project>

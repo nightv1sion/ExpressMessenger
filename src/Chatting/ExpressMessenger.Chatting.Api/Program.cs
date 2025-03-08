@@ -3,6 +3,7 @@ using ExpressMessenger.Chatting.Application;
 using ExpressMessenger.Chatting.Application.Chats;
 using ExpressMessenger.Chatting.Application.Notifications;
 using ExpressMessenger.Chatting.Infrastructure;
+using ExpressMessenger.Chatting.Infrastructure.Messaging;
 using ExpressMessenger.Chatting.Infrastructure.Persistence;
 using ExpressMessenger.Common.Api;
 using ExpressMessenger.Common.Api.OpenApi;
@@ -62,6 +63,8 @@ builder.Services.AddProblemDetails(options =>
 builder.Services
     .AddScoped<IUserNotifier, UserNotifier>()
     .AddSignalR();
+
+// builder.Services.RegisterMessaging(builder.Configuration);
 
 var app = builder.Build();
 

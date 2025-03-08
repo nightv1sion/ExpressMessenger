@@ -15,4 +15,10 @@ public interface IUserRepository
     Task<IReadOnlyCollection<User>> SearchBy(
         IReadOnlyCollection<string>? userNames = null,
         CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<User>> GetBy(
+        DateTimeOffset refreshTokenExpiredBefore,
+        CancellationToken cancellationToken);
+    
+    void Remove(User user);
 }

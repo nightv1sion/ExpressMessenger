@@ -9,4 +9,6 @@ public interface IChatRepository
     Task<Chat?> TryGetById(Guid id, CancellationToken cancellationToken);
 
     Task<Chat?> TryGetPersonalBy(IReadOnlyCollection<Guid> userIds, CancellationToken cancellationToken);
+    
+    void Remove(Chat chat);
 }

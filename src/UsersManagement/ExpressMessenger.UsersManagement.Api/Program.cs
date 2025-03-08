@@ -1,9 +1,13 @@
 using ExpressMessenger.Common.Api;
 using ExpressMessenger.Common.Api.OpenApi;
+using ExpressMessenger.Common.Application;
+using ExpressMessenger.SharedKernel.ApiContracts.Messaging.UserDeleted;
 using ExpressMessenger.UsersManagement.Application;
 using ExpressMessenger.UsersManagement.Domain.UserAggregate.Exceptions;
 using ExpressMessenger.UsersManagement.Infrastructure;
 using ExpressMessenger.UsersManagement.Infrastructure.Authentication.Exceptions;
+using ExpressMessenger.UsersManagement.Infrastructure.Jobs;
+using ExpressMessenger.UsersManagement.Infrastructure.Messaging;
 using ExpressMessenger.UsersManagement.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +61,9 @@ builder.Services.AddProblemDetails(options =>
         }
     };
 });
+
+// builder.Services.RegisterMessaging(builder.Configuration);
+builder.Services.RegisterJobs();
 
 var app = builder.Build();
 

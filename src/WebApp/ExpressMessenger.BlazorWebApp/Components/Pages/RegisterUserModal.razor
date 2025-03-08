@@ -13,7 +13,9 @@
        IsScrollable="true">
     <BodyTemplate>
         <p>Придумайте имя пользователя</p>
-        <InputText @bind-Value="_userName" id="UserName"/>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" @bind="_userName" id="UserName" placeholder="Введите имя пользователя" />
+        </div>
         <Button Color="ButtonColor.Primary" Outline="true" @onclick="OnRegisterUser">
             Создать пользователя
         </Button>
